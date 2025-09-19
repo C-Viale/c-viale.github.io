@@ -1,29 +1,51 @@
 ---
 import { slugify } from "src/utils/functions/slugify";
+import Card from "./card.astro";
 
 interface Props {
   name: string;
+
+  heading?: 1 | 2 | 3 | 4 | 5 | 6;
+  titleAlign?: "start" | "center" | "end";
 }
 
-const { name } = Astro.props;
+const { name, heading = 1, titleAlign = "start" } = Astro.props;
 
 const id = slugify(name);
-const titleId = id + "-title";
+const titleId = id + "_title";
+
+const Element = `h${heading}`;
+const headingProps = { id: titleId } as Partial<HTMLHeadingElement> &
+  Record<string, string>;
+
+if (titleAlign !== "start") headingProps["class"] = titleAlign;
 ---
 
-<section id={id} aria-labelledby={titleId}>
-  <h2 id={titleId}>{name}</h2>
+<section id={id} aria-labelledby={titleId} class="segment">
+  <Element {...headingProps}>{name}</Element>
   <div>
     <slot />
   </div>
 </section>
 
 <style is:global>
-  section {
+  .segment {
     margin-bottom: 2rem;
 
-    h2 {
+    > h1,
+    > h2,
+    > h3,
+    > h4,
+    > h5,
+    > h6 {
       margin-bottom: 0.5rem;
+
+      &.center {
+        text-align: center;
+      }
+      &.end {
+        text-align: end;
+      }
     }
   }
 </style>

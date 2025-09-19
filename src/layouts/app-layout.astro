@@ -10,7 +10,7 @@ import "#styles/globals.css";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Portifolio</title>
+    <title>Caio Lima | Full-Stack Engineer Portifolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -22,7 +22,10 @@ import "#styles/globals.css";
   <body>
     <header id="app-header">
       <a href="/">Home</a>
-      <a href="/projects">Projects</a>
+      <a href="/#about-me">About me</a>
+      <a href="/#projects">Projects</a>
+      <a href="/#stack">Stack</a>
+      <a href="/#experience">Experience</a>
       <a href="/cv">CV</a>
     </header>
 
@@ -34,18 +37,19 @@ import "#styles/globals.css";
 
 <style is:global>
   #app-header {
+    background-color: var(--bg);
+    border-bottom: 1px solid var(--border);
+    height: var(--header-h);
     width: 100vw;
     position: fixed;
     top: 0;
-    height: 56px;
-    background-color: var(--bg);
-    border-bottom: 1px solid var(--border);
 
     display: flex;
     align-items: center;
     gap: 4rem;
     justify-content: end;
     padding: 0 3rem;
+    z-index: 1000;
 
     a {
       color: white;

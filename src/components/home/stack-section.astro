@@ -1,0 +1,19 @@
+---
+import StackTag from "#components/stack-tag.astro";
+import { stack } from "#constants/stack";
+import HomeSection from "./home-section.astro";
+---
+
+<HomeSection title="Stack">
+  {stack.map((skill) => <StackTag name={skill} />)}
+</HomeSection>
+
+<style is:global>
+  #stack_content {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: auto;
+    max-width: 500px;
+  }
+</style>

@@ -1,0 +1,41 @@
+---
+import athens_portal from "#assets/athens-portal/logo.jpeg";
+import ProjectCard from "#components/project-card.astro";
+import { projects } from "#constants/projects";
+import HomeSection from "./home-section.astro";
+
+const imgs: Record<string, ImageMetadata> = {
+  athens_portal,
+};
+---
+
+<HomeSection title="Projects">
+  {
+    projects.map((project) => (
+      <ProjectCard
+        href={project.href}
+        name={project.name}
+        name={project.name}
+        image={imgs[project.id]}
+      />
+    ))
+  }
+</HomeSection>
+
+<style is:global>
+  #projects_content {
+    display: grid;
+    place-items: center;
+    gap: 1rem;
+
+    grid-template-columns: 1fr;
+
+    @media (530px < width < 845px) {
+      grid-template-columns: 1fr 1fr;
+      max-width: 520px;
+    }
+    @media (width >= 845px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+</style>

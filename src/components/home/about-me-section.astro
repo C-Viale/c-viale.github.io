@@ -1,0 +1,71 @@
+---
+import me from "#assets/me.jpg";
+import { Image } from "astro:assets";
+import HomeSection from "./home-section.astro";
+---
+
+<HomeSection title="About me">
+  <div id="info">
+    <!-- <p>My name is Caio Lima and I'm a dedicated Full-Stack Developer.</p>
+        <br /> -->
+    <p>
+      With 5 years of programming experience, I specialize in building
+      sophisticated web applications.
+    </p>
+    <br />
+    <p>
+      I am deeply engaged in researching new technologies and advance my skills
+      to deliver products that optimize user experiences and operational
+      efficiency.
+    </p>
+  </div>
+
+  <Image src={me} alt="An image of myself" height={200} />
+
+  <ul id="my-links">
+    <li>
+      <a target="_blank" href="https://linkedin.com/in/caio-vlima">LinkedIn</a>
+    </li>
+    <li>
+      <a target="_blank" href="https://github.com/C-Viale">GitHub</a>
+    </li>
+  </ul>
+</HomeSection>
+
+<style is:global>
+  #about-me_content {
+    display: grid;
+    grid-template-columns: 5fr 1fr 1fr;
+    align-items: center;
+    /* gap: 2rem; */
+    padding: 0 3rem;
+
+    img {
+      flex-basis: content;
+      display: block;
+    }
+  }
+
+  #info {
+    padding-right: 2rem;
+  }
+
+  #my-links {
+    list-style: none;
+
+    li {
+      text-align: end;
+      border-bottom: 1px solid white;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: gray;
+      }
+    }
+  }
+</style>

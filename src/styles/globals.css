@@ -3,6 +3,8 @@
   --bg: hsl(0, 0%, 10%);
   --bg-lighter: hsl(0, 0%, 20%);
   --border: hsl(0, 0%, 35%);
+
+  --header-h: 56px;
 }
 
 * {
@@ -10,6 +12,7 @@
   margin: 0;
   box-sizing: border-box;
   flex-wrap: wrap;
+  scroll-behavior: smooth;
 }
 
 html,
@@ -33,7 +36,6 @@ html {
 }
 
 main {
-  padding-top: 6rem;
-  max-width: 80%;
+  padding-top: var(--header-h);
   margin: auto;
 }

@@ -14,19 +14,17 @@ const { title, description, image, imageAlt = "" } = Astro.props;
 ---
 
 <AppLayout>
-  <Card>
-    <article>
-      <section id="intro-section" aria-labelledby="article-title">
-        <div>
-          <h1 id="article-title">{title}</h1>
-          <p>{description}</p>
-        </div>
+  <article class="project-article">
+    <section id="intro-section" aria-labelledby="article-title">
+      <div>
+        <h1 id="article-title">{title}</h1>
+        <p>{description}</p>
+      </div>
 
-        {image && <Image src={image} alt={imageAlt} height={100} />}
-      </section>
-      <slot />
-    </article>
-  </Card>
+      {image && <Image src={image} alt={imageAlt} height={100} />}
+    </section>
+    <slot />
+  </article>
 </AppLayout>
 
 <style is:global>
@@ -41,5 +39,9 @@ const { title, description, image, imageAlt = "" } = Astro.props;
   #article-title {
     font-size: 2rem;
     margin-bottom: 0.5rem;
+  }
+
+  .project-article {
+    padding: 2rem;
   }
 </style>

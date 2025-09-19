@@ -1,0 +1,37 @@
+---
+import { workExperiences } from "src/utils/constants/work-experiences";
+import HomeSection from "./home-section.astro";
+---
+
+<HomeSection title="Experience">
+  <table>
+    <colgroup>
+      <col width="35%" />
+      <col width="45%" />
+      <col width="20%" />
+    </colgroup>
+    <tbody>
+      {
+        workExperiences.map((experience) => (
+          <tr>
+            <td>{experience.company}</td>
+            <td>{experience.period.join(" - ")}</td>
+            <td>{experience.location}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</HomeSection>
+
+<style is:global>
+  #experience_content table {
+    width: 100%;
+    border-collapse: collapse;
+
+    td {
+      padding: 0.2rem 0.5rem;
+      border: 1px solid gray;
+    }
+  }
+</style>
