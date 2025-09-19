@@ -1,0 +1,45 @@
+---
+import Card from "#components/card.astro";
+import AppLayout from "#layouts/app-layout.astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  title: string;
+  description: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+}
+
+const { title, description, image, imageAlt = "" } = Astro.props;
+---
+
+<AppLayout>
+  <Card>
+    <article>
+      <section id="intro-section" aria-labelledby="article-title">
+        <div>
+          <h1 id="article-title">{title}</h1>
+          <p>{description}</p>
+        </div>
+
+        {image && <Image src={image} alt={imageAlt} height={100} />}
+      </section>
+      <slot />
+    </article>
+  </Card>
+</AppLayout>
+
+<style is:global>
+  #intro-section {
+    display: flex;
+
+    > div {
+      flex: 1;
+    }
+  }
+
+  #article-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+</style>

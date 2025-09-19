@@ -1,0 +1,79 @@
+---
+import ProjectArticle from "#layouts/project-article.astro";
+import { Image } from "astro:assets";
+
+import book from "#assets/athens-portal/book.jpeg";
+import discover from "#assets/athens-portal/discover.jpeg";
+import homepage from "#assets/athens-portal/homepage.jpeg";
+import logo from "#assets/athens-portal/logo-full.jpeg";
+import reviews from "#assets/athens-portal/reviews.jpeg";
+import Section from "#components/section.astro";
+---
+
+<ProjectArticle
+  title="Athens Portal"
+  description="A mobile app built for my bachelor's degree final paper."
+  image={logo}
+  imageAlt="Athens Portal logo"
+>
+  <Section name="Background">
+    <p>
+      Back on those first days in college, me and my colleagues struggled when
+      it comes to finding books with reliable information.
+    </p>
+    <p>
+      Professors often shared works that could help us, but sometimes some of
+      those books were expensive or unavaibled at the college's library.
+    </p>
+  </Section>
+
+  <Section name="The app">
+    <p>
+      Users could use this app without an account, but with some limitations.
+    </p>
+    <p>
+      Registered people could index new books and review them, giving a rating
+      and a commentary if they want.
+    </p>
+    <p>
+      Also, users could define what genres they liked, and the app would give a
+      list of books related to their likings.
+    </p>
+
+    <div class="gallery">
+      <Image src={homepage} alt="" />
+      <Image src={discover} alt="" />
+      <Image src={book} alt="" />
+      <Image src={reviews} alt="" />
+    </div>
+  </Section>
+
+  <Section name="Technical details">
+    <p>The app was made using Dart/Flutter with a Node.js backend.</p>
+
+    <p>
+      Indexing worked by using third-party APIs. Books were indexed when people
+      searched for it the first time. Although it wasn't visible, the system
+      used to save what user indexed each work. We were planning on adding some
+      kind of reward for people that helped more on indexing books.
+    </p>
+
+    <p>For more info refer to this document</p>
+  </Section>
+</ProjectArticle>
+
+<style is:global>
+  .gallery {
+    margin: 4rem 0;
+    display: flex;
+    flex-wrap: nowrap;
+    height: 300px;
+    gap: 3rem;
+    justify-content: center;
+
+    img {
+      width: auto;
+      height: 300px;
+    }
+  }
+</style>

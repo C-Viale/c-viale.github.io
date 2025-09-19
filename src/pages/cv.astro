@@ -1,0 +1,57 @@
+---
+import Card from "#components/card.astro";
+import Section from "#components/section.astro";
+import Skills from "#components/skills.astro";
+import WorkExperience from "#components/work-experience.astro";
+import { education } from "src/utils/constants/education";
+import { workExperiences } from "src/utils/constants/work-experiences";
+import AppLayout from "#layouts/app-layout.astro";
+---
+
+<AppLayout>
+  <Card>
+    <Skills />
+    <Section name="Education">
+      <ul>
+        {
+          education.map((item) => (
+            <li>
+              <h3>{item.degree}</h3>
+              <p style="display:flex; justify-content:space-between;color:grey;">
+                <span>{item.institution}</span>
+                <span>{item.period.join(" - ")}</span>
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </Section>
+    <Section name="Work Experience">
+      <ul>
+        {
+          workExperiences.map((experience) => (
+            <li>
+              <WorkExperience
+                company={experience.company}
+                position={experience.position}
+                period={experience.period}
+                details={experience.details}
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </Section>
+  </Card>
+</AppLayout>
+
+<style is:global>
+  #work-experience > ul {
+    list-style: none;
+  }
+
+  #skills > div {
+    display: flex;
+    gap: 0.5rem;
+  }
+</style>

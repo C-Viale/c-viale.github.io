@@ -1,0 +1,56 @@
+---
+import { ClientRouter } from "astro:transitions";
+import "#styles/globals.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Portifolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Jersey+15&display=swap"
+      rel="stylesheet"
+    />
+    <ClientRouter />
+  </head>
+  <body>
+    <header id="app-header">
+      <a href="/">Home</a>
+      <a href="/projects">Projects</a>
+      <a href="/cv">CV</a>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  #app-header {
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    height: 56px;
+    background-color: var(--bg);
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    justify-content: end;
+    padding: 0 3rem;
+
+    a {
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+</style>

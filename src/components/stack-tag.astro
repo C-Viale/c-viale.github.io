@@ -1,0 +1,17 @@
+---
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<span class="stack">{name}</span>
+
+<style is:global>
+  .stack {
+    background-color: rgb(71, 71, 71);
+    padding: 0.5rem;
+    /* border-radius: 8px; */
+  }
+</style>
