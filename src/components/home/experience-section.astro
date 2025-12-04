@@ -3,35 +3,66 @@ import { workExperiences } from "src/utils/constants/work-experiences";
 import HomeSection from "./home-section.astro";
 ---
 
-<HomeSection title="Experience">
-  <table>
-    <colgroup>
-      <col width="35%" />
-      <col width="45%" />
-      <col width="20%" />
-    </colgroup>
-    <tbody>
-      {
-        workExperiences.map((experience) => (
-          <tr>
-            <td>{experience.company}</td>
-            <td>{experience.period.join(" - ")}</td>
-            <td>{experience.location}</td>
-          </tr>
-        ))
-      }
-    </tbody>
-  </table>
+<HomeSection title="Work Experience">
+  <ul id="work-experiences-list">
+    {
+      workExperiences.map((experience) => (
+        <li class="work-experience">
+          <header>
+            <h3>
+              <strong>{experience.position}</strong>
+              at
+              <strong>{experience.company}</strong>
+            </h3>
+            <span>{experience.period.join(" - ")}</span>
+          </header>
+          <ul class="work-experience-details">
+            {experience.details.map((detail) => (
+              <li>{detail}</li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
 </HomeSection>
 
 <style is:global>
-  #experience_content table {
-    width: 100%;
-    border-collapse: collapse;
+  #work-experiences-list {
+    list-style: none;
+    padding: 0 2rem;
+  }
 
-    td {
-      padding: 0.2rem 0.5rem;
-      border: 1px solid gray;
+  .work-experience {
+    padding: 1rem;
+    border-width: 1px 1px 1px 1px;
+    margin-top: -1px;
+    color: var(--text-subtle);
+    background-color: var(--bg-dark);
+    transition: all var(--transition);
+    border-color: var(--border);
+
+    > header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 400 !important;
+
+      h3 {
+        font-weight: normal;
+      }
+
+      strong {
+        font-weight: 600 !important;
+        color: var(--text);
+      }
     }
+  }
+
+  .work-experience-details {
+    padding: 1rem;
+    color: var(--text-subtle);
+  }
+
+  @media (max-width: 767px) {
   }
 </style>

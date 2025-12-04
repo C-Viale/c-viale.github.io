@@ -1,0 +1,16 @@
+---
+const { id } = Astro.props;
+---
+
+<div class="caio-logo" id={id}>
+  <p>Caio</p>
+  <p>Viale</p>
+</div>
+
+<style is:global>
+  .caio-logo {
+    text-align: center;
+    font-family: "Silkscreen", sans-serif;
+    font-weight: 600;
+  }
+</style>

@@ -3,18 +3,24 @@ import { slugify } from "src/utils/functions/slugify";
 
 interface Props {
   title: string;
+  hideTitle?: boolean;
+  transparent?: boolean;
   heading?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
-const { title } = Astro.props;
+const { title, hideTitle, transparent } = Astro.props;
 
 const id = slugify(title);
 const titleId = `${id}_title`;
 const contentId = `${id}_content`;
 ---
 
-<section id={id} class="home-segment" aria-labelledby={titleId}>
-  <h2 id={titleId}>{title}</h2>
+<section
+  id={id}
+  class:list={["home-segment", { transparent }]}
+  aria-labelledby={titleId}
+>
+  <h2 id={titleId} hidden={hideTitle}>{title}</h2>
   <div id={contentId}>
     <slot />
   </div>
@@ -22,17 +28,29 @@ const contentId = `${id}_content`;
 
 <style is:global>
   .home-segment {
-    padding: 1.5rem 0;
-    margin-bottom: 1rem;
+    padding: 2rem 0;
+    background-color: var(--bg-dark);
+    transition: background var(--transition);
 
     > h2 {
       text-align: center;
       margin-bottom: 2rem;
+
+      font-family: "Silkscreen", sans-serif;
+      font-weight: 400;
     }
 
     > div {
-      max-width: 800px;
+      max-width: 906px;
       margin: auto;
     }
+
+    &:last-of-type {
+      padding-bottom: 4rem;
+    }
+  }
+
+  .transparent {
+    background-color: transparent;
   }
 </style>

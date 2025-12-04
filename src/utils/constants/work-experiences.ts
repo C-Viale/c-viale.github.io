@@ -4,6 +4,7 @@ type WorkExperience = {
   location: string;
   period: string[];
   details: string[];
+  freelancer?: boolean;
 };
 
 export const workExperiences: WorkExperience[] = [
@@ -18,17 +19,19 @@ export const workExperiences: WorkExperience[] = [
     ],
   },
   {
-    company: "Spark (Freelancer)",
+    company: "Spark",
     position: "Full-Stack Engineer",
     period: ["March 2025", "May 2025"],
     location: "Remote",
+    freelancer: true,
     details: [`Developed and implemented new features for the company's ORM.`],
   },
   {
-    company: "JatLavo (Freelancer)",
+    company: "JatLavo",
     position: "Full-Stack Engineer",
     period: ["June 2024", "May 2025"],
     location: "Remote",
+    freelancer: true,
     details: [`Developed and implemented an internal management system.`],
   },
   {

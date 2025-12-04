@@ -15,7 +15,7 @@ const imgs: Record<string, ImageMetadata> = {
       <ProjectCard
         href={project.href}
         name={project.name}
-        name={project.name}
+        description={project.description}
         image={imgs[project.id]}
       />
     ))
@@ -25,17 +25,11 @@ const imgs: Record<string, ImageMetadata> = {
 <style is:global>
   #projects_content {
     display: grid;
-    place-items: center;
-    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
 
-    grid-template-columns: 1fr;
-
-    @media (530px < width < 845px) {
-      grid-template-columns: 1fr 1fr;
-      max-width: 520px;
-    }
-    @media (width >= 845px) {
-      grid-template-columns: 1fr 1fr 1fr;
+    @media (max-width: 767px) {
+      grid-template-columns: 1fr;
     }
   }
 </style>

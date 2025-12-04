@@ -2,44 +2,11 @@
 import AboutMeSection from "#components/home/about-me-section.astro";
 import ExperienceSection from "#components/home/experience-section.astro";
 import ProjectSection from "#components/home/project-section.astro";
-import StackSection from "#components/home/stack-section.astro";
 import AppLayout from "#layouts/app-layout.astro";
 ---
 
 <AppLayout>
-  <section id="banner">
-    <div id="banner-content">
-      <h1>Caio Lima</h1>
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam unde
-        voluptate sit vitae corporis sint quasi harum?
-      </p>
-    </div>
-  </section>
-
   <AboutMeSection />
   <ProjectSection />
-  <StackSection />
   <ExperienceSection />
 </AppLayout>
-
-<style is:global>
-  #banner {
-    display: grid;
-    place-items: center;
-    border-bottom: 1px solid var(--border);
-    height: 500px;
-  }
-  #banner-content {
-    max-width: 600px;
-    text-align: center;
-    h1 {
-      font-size: 4rem;
-      margin-bottom: 2rem;
-    }
-
-    p {
-      font-size: 2rem;
-    }
-  }
-</style>

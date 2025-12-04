@@ -1,71 +1,151 @@
 ---
-import me from "#assets/me.jpg";
+import me from "#assets/me.jpeg";
 import { Image } from "astro:assets";
 import HomeSection from "./home-section.astro";
+import Anchor from "#components/anchor.astro";
+
+import BunIcon from "#components/icons/programming/bun.astro";
+import HtmlIcon from "#components/icons/programming/html.astro";
+import CssIcon from "#components/icons/programming/css.astro";
+import JsIcon from "#components/icons/programming/js.astro";
+import TsIcon from "#components/icons/programming/ts.astro";
+import ReactIcon from "#components/icons/programming/react.astro";
+import NodeIcon from "#components/icons/programming/node.astro";
+
+import CIcon from "#components/icons/programming/c.astro";
+import CppIcon from "#components/icons/programming/cpp.astro";
+import CSharpIcon from "#components/icons/programming/csharp.astro";
+import DotnetIcon from "#components/icons/programming/dotnet.astro";
+import FlutterIcon from "#components/icons/programming/flutter.astro";
+import GoIcon from "#components/icons/programming/go.astro";
+import DartIcon from "#components/icons/programming/dart.astro";
+import RustIcon from "#components/icons/programming/rust.astro";
+import PythonIcon from "#components/icons/programming/python.astro";
+
+import NextjsIcon from "#components/icons/programming/nextjs.astro";
+import ViteIcon from "#components/icons/programming/vite.astro";
+import TaurisIcon from "#components/icons/programming/tauri.astro";
 ---
 
-<HomeSection title="About me">
-  <div id="info">
-    <!-- <p>My name is Caio Lima and I'm a dedicated Full-Stack Developer.</p>
+<HomeSection title="About me" hideTitle transparent>
+  <div id="info_container">
+    <Image src={me} alt="An image of myself" height={248} />
+    <div id="info_text">
+      <!-- <p>My name is Caio Lima and I'm a dedicated Full-Stack Developer.</p>
         <br /> -->
-    <p>
-      With 5 years of programming experience, I specialize in building
-      sophisticated web applications.
-    </p>
-    <br />
-    <p>
-      I am deeply engaged in researching new technologies and advance my skills
-      to deliver products that optimize user experiences and operational
-      efficiency.
-    </p>
+
+      <h1>Hello!</h1>
+      <h1>My name is Caio Lima and I'm a dedicated Full-Stack developer</h1>
+      <p>
+        With 5+ years of programming experience, I specialize in building
+        sophisticated web applications.
+      </p>
+
+      <div id="my-links">
+        <Anchor
+          button
+          label="LinkedIn"
+          href="https://linkedin.com/in/caio-vlima"
+        />
+        <Anchor button label="GitHub" href="https://github.com/C-Viale" />
+      </div>
+    </div>
+  </div>
+  <div id="skill-icons">
+    <HtmlIcon hover />
+    <CssIcon hover />
+    <JsIcon hover />
+    <TsIcon hover />
+    <ReactIcon hover />
+    <NodeIcon hover />
+    <BunIcon hover />
+    <CIcon hover />
+    <CppIcon hover />
+    <CSharpIcon hover />
+    <DotnetIcon hover />
+    <RustIcon hover dynamic />
+    <GoIcon hover />
+    <DartIcon hover />
+    <FlutterIcon hover />
+    <PythonIcon hover />
+    <ViteIcon hover />
+    <TaurisIcon hover />
+    <NextjsIcon hover />
+    <!-- <span>ast</span> -->
   </div>
 
-  <Image src={me} alt="An image of myself" height={200} />
-
-  <ul id="my-links">
-    <li>
-      <a target="_blank" href="https://linkedin.com/in/caio-vlima">LinkedIn</a>
-    </li>
-    <li>
-      <a target="_blank" href="https://github.com/C-Viale">GitHub</a>
-    </li>
-  </ul>
+  <p id="extra-info">
+    I am deeply engaged in researching new technologies and advance my skills to
+    deliver products that optimize user experiences and operational efficiency.
+  </p>
 </HomeSection>
 
 <style is:global>
-  #about-me_content {
-    display: grid;
-    grid-template-columns: 5fr 1fr 1fr;
-    align-items: center;
-    /* gap: 2rem; */
-    padding: 0 3rem;
+  #about-me {
+    padding-top: 3.5rem;
+  }
+  #info_container {
+    display: flex;
+    gap: 3rem;
+    max-width: 906px;
+    height: 248px;
+    margin-bottom: 3rem;
+    h1 {
+      font-size: 20px;
+    }
+
+    p {
+      font-size: 14px;
+    }
 
     img {
-      flex-basis: content;
-      display: block;
+      box-shadow:
+        -4px -4px 0 0 #616161,
+        -9px -9px 0 0 #373737;
     }
   }
 
-  #info {
-    padding-right: 2rem;
+  #info_text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    justify-content: center;
+    max-width: 610px;
   }
 
   #my-links {
+    display: flex;
     list-style: none;
+    gap: 1rem;
+  }
 
-    li {
-      text-align: end;
-      border-bottom: 1px solid white;
+  #skill-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    padding: 0 2rem;
+  }
+
+  #extra-info {
+    font-size: 24px !important;
+    text-align: center;
+    padding: 0 2rem;
+  }
+
+  @media (max-width: 767px) {
+    #info_container {
+      height: unset;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 1.5rem;
     }
 
-    a {
-      color: white;
-      text-decoration: none;
-      transition: color 0.3s ease;
-
-      &:hover {
-        color: gray;
-      }
+    #my-links {
+      justify-content: center;
     }
   }
 </style>

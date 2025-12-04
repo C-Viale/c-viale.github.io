@@ -1,5 +1,4 @@
 ---
-import Card from "#components/card.astro";
 import AppLayout from "#layouts/app-layout.astro";
 import { Image } from "astro:assets";
 
@@ -13,35 +12,48 @@ interface Props {
 const { title, description, image, imageAlt = "" } = Astro.props;
 ---
 
-<AppLayout>
-  <article class="project-article">
-    <section id="intro-section" aria-labelledby="article-title">
-      <div>
-        <h1 id="article-title">{title}</h1>
-        <p>{description}</p>
-      </div>
+<AppLayout title={`${title} - Caio Lima's Portifolio`}>
+  <div id="article-info">
+    {image && <Image src={image} alt={imageAlt} height={100} />}
+    <h1 id="article-title">{title}</h1>
+    <p>{description}</p>
+  </div>
 
-      {image && <Image src={image} alt={imageAlt} height={100} />}
-    </section>
-    <slot />
+  <article class="project-article">
+    <div id="article-content">
+      <slot />
+    </div>
   </article>
 </AppLayout>
 
 <style is:global>
-  #intro-section {
-    display: flex;
+  #article-info {
+    padding: 3rem 1rem;
+    text-align: center;
+    flex: 1;
 
-    > div {
-      flex: 1;
+    > h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    > p {
+      color: var(--text-subtle);
     }
   }
 
-  #article-title {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+  #article-content {
+    max-width: 906px;
+    margin: auto;
   }
 
   .project-article {
-    padding: 2rem;
+    background-color: var(--bg-dark);
+    padding: 0 2rem;
+
+    p {
+      text-align: justify;
+      margin-bottom: 1rem;
+    }
   }
 </style>

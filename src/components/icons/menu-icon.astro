@@ -1,0 +1,15 @@
+---
+const { size = 16 } = Astro.props;
+
+let normalizedSize = "";
+
+if (typeof size === "number") normalizedSize = `${size}px`;
+---
+
+<svg width={size} height={size} viewBox="0 0 12 12">
+  <g>
+    <rect height="1" width="11" x="0.5" y="5.5"></rect>
+    <rect height="1" width="11" x="0.5" y="2.5"></rect>
+    <rect height="1" width="11" x="0.5" y="8.5"></rect>
+  </g>
+</svg>

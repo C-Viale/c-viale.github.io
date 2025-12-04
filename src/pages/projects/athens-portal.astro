@@ -18,47 +18,81 @@ import Section from "#components/section.astro";
 >
   <Section name="Background">
     <p>
-      Back on those first days in college, me and my colleagues struggled when
-      it comes to finding books with reliable information.
+      As soon as I started college in 2020, the pandemic hit us hard. Remote
+      classes were very rough at the start. Both professors and students that
+      weren't "tech-aligned" struggled very hard to attend to classes. This
+      improved over time but there was something that did not: finding reliable
+      sources to our studies.
     </p>
     <p>
-      Professors often shared works that could help us, but sometimes some of
-      those books were expensive or unavaibled at the college's library.
+      Brazil is not a country where the majority of people have the habit of
+      reading. This includes several factors as the pricing (books are usually
+      expensive), lack of incentive from schools and (maybe) the fact that
+      youngest people simply prefer to stay on their smartphones.
+    </p>
+    <p>
+      In our case, professors often shared works that could help us on our
+      studies, however most of those books were too expensive or were not
+      available at the college's library. Communication sometimes was not easy,
+      so we often forgot about those recommended books.
+    </p>
+    <p>
+      The idea of creating an app to help us with this problem came from
+      Guilherme Angeloni. He was one of few friends that I made in that class, a
+      good and honest person, but he lacked experience in software development.
+      We agreed that he would work on the research and I would develop the app.
     </p>
   </Section>
 
   <Section name="The app">
     <p>
-      Users could use this app without an account, but with some limitations.
-    </p>
-    <p>
-      Registered people could index new books and review them, giving a rating
-      and a commentary if they want.
-    </p>
-    <p>
-      Also, users could define what genres they liked, and the app would give a
-      list of books related to their likings.
+      The premise of the app was creating a community capable of sharing books
+      or other works in an environment built for it. People could find new works
+      through "indexing", a system built to find them in other public sources on
+      the web. At the time, we were only using one third-party API for this
+      search.
     </p>
 
+    <p>
+      Once a book got succesfully indexed, it was them saved on our database and
+      available to be reviewed. Any registered user could create a review about
+      the work, giving a commentary and also assign a rating from 1 to 5 stars.
+    </p>
+
+    <p>
+      A person could use this app without being registered, but it could not
+      create reviews nor indexing new works.
+    </p>
     <div class="gallery">
-      <Image src={homepage} alt="" />
-      <Image src={discover} alt="" />
-      <Image src={book} alt="" />
-      <Image src={reviews} alt="" />
+      <Image src={homepage} alt="An image of the homepage" />
+      <Image src={discover} alt="An image of the Discover List screen" />
+      <Image
+        src={book}
+        alt={`An image of the screen showing info about "The Hitchhiker's Guide to The Galaxy" `}
+      />
+      <Image
+        src={reviews}
+        alt={`An image of the "Recent reviews" section in the homepage`}
+      />
     </div>
+    <p>
+      The homepage shows works divided by categories: highlights, most rated,
+      recent reviews and recent indexes. The latter one just lists the latest
+      works that were added to our database, while the other categories had a
+      more complex algorithm under the hood.
+    </p>
+    <p>
+      Another view is the Discovery List. Registered users could add in their
+      profile what genres and types of work (books, magazines, letters etc.)
+      they like. The server would generate a list of indexed works that are
+      related to the user likings, based on their overall rating.
+    </p>
   </Section>
 
   <Section name="Technical details">
-    <p>The app was made using Dart/Flutter with a Node.js backend.</p>
-
-    <p>
-      Indexing worked by using third-party APIs. Books were indexed when people
-      searched for it the first time. Although it wasn't visible, the system
-      used to save what user indexed each work. We were planning on adding some
-      kind of reward for people that helped more on indexing books.
-    </p>
-
-    <p>For more info refer to this document</p>
+    <p>The app was built using Dart/Flutter using Clean Architecture.</p>
+    <p>We used a Node.js back-end built using Express</p>
+    <!-- <p>For more info refer to this document</p> -->
   </Section>
 </ProjectArticle>
 

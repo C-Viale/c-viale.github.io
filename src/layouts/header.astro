@@ -1,0 +1,157 @@
+---
+import Anchor from "#components/anchor.astro";
+import ThemeToggle from "#components/theme-toggle.astro";
+import MenuIcon from "#components/icons/menu-icon.astro";
+import IconButton from "#components/icon-button.astro";
+import CaioLogo from "#components/caio-logo.astro";
+---
+
+<header id="app-header">
+  <div id="app-header-content">
+    <CaioLogo id="app-header-logo" />
+
+    <div id="app-header-nav">
+      <Anchor label="Articles" href="/#articles" />
+      <Anchor label="Projects" href="/#projects" />
+      <Anchor button label="Contact me" href="#" />
+
+      <ThemeToggle />
+      <IconButton id="expand-dropdown">
+        <MenuIcon size={20} />
+      </IconButton>
+    </div>
+  </div>
+  <div id="app-header-dropdown">
+    <ThemeToggle />
+    <Anchor label="Articles" href="/#articles" />
+    <Anchor label="Projects" href="/#projects" />
+  </div>
+</header>
+
+<style is:global>
+  #app-header {
+    pointer-events: none;
+    height: var(--header-h);
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    transition: background var(--transition);
+    z-index: 1000;
+
+    &[data-scrolled] #app-header-content {
+      background-color: var(--bg-dark);
+
+      border-bottom: 1px solid var(--border);
+    }
+  }
+
+  #app-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1.5rem;
+    padding-right: 2rem;
+  }
+
+  #app-header-logo {
+    justify-self: flex-start;
+  }
+  #app-header-nav {
+    display: flex;
+    pointer-events: all;
+    align-items: center;
+    gap: 3rem;
+    justify-content: end;
+    height: var(--header-h);
+  }
+
+  #app-header-dropdown {
+    display: none;
+  }
+
+  #expand-dropdown {
+    display: none;
+    background-color: transparent;
+  }
+
+  @media (max-width: 767px) {
+    #app-header {
+      min-height: var(--header-h);
+      height: unset;
+    }
+
+    #expand-dropdown {
+      display: grid;
+    }
+
+    #app-header-content {
+      background-color: var(--bg-dark);
+      border-bottom: 1px solid var(--border);
+    }
+
+    #app-header-dropdown {
+      display: flex;
+      gap: 1.5rem;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      padding: 2rem;
+      border-bottom: 1px solid var(--border);
+      transition:
+        opacity var(--transition),
+        background-color var(--transition);
+
+      &[data-open] {
+        background-color: var(--bg-dark);
+        opacity: 1;
+        pointer-events: all;
+        height: unset;
+      }
+    }
+
+    #app-header-content {
+      .anchor:not(.btn),
+      .theme-toggle {
+        display: none;
+      }
+    }
+  }
+</style>
+
+<script>
+  function init() {
+    const header = document.getElementById("app-header");
+
+    if (!header) return;
+
+    if (window.scrollY > 40) {
+      header.dataset.scrolled = "true";
+    }
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY <= 40) {
+        delete header.dataset.scrolled;
+        return;
+      }
+
+      if ("scrolled" in header.dataset) return;
+
+      header.dataset.scrolled = "";
+    });
+
+    document
+      .getElementById("expand-dropdown")!
+      .addEventListener("click", () => {
+        const dropdown = document.getElementById("app-header-dropdown")!;
+
+        if (!("open" in dropdown.dataset)) {
+          dropdown.dataset.open = "true";
+        } else {
+          delete dropdown.dataset.open;
+        }
+      });
+  }
+
+  document.addEventListener("astro:page-load", init);
+</script>

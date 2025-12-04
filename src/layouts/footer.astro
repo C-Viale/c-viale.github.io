@@ -1,0 +1,102 @@
+---
+import Anchor from "#components/anchor.astro";
+---
+
+<footer id="app-footer">
+  <div id="footer-content">
+    <div id="footer-final-thoughts">
+      <h2>Caio Lima</h2>
+      <p>
+        Whether you want something built, rebuilt, fixed or just to say hi, I'm
+        sure we'll find something we could work together on!
+      </p>
+    </div>
+
+    <div class="contact-info">
+      <h3>contact info</h3>
+      <ul>
+        <li>
+          <Anchor label="LinkedIn" href="https://linkedin.com/in/caio-vlima" />
+        </li>
+        <li>
+          <Anchor label="GitHub" href="https://github.com/C-Viale" />
+        </li>
+        <li>
+          <Anchor
+            label="caiovialedl@gmail.com"
+            href="mailto:caiovialedl@gmail.com"
+          />
+        </li>
+        <li>
+          <Anchor
+            label="+55 (17) 99121-7118"
+            href="https://wa.me/5517991217118"
+          />
+        </li>
+      </ul>
+    </div>
+
+    <nav class="footer-nav">
+      <h3>Quick Access</h3>
+      <ul>
+        <li><Anchor label="About me" href="/#about-me" /></li>
+        <li><Anchor label="Work experience" href="/#work-experience" /></li>
+        <li><Anchor label="Projects" href="/#projects" /></li>
+      </ul>
+    </nav>
+  </div>
+
+  <p id="copyright">All rights reserved | Designed by Giovana Tavares</p>
+</footer>
+
+<style is:global>
+  #app-footer {
+    padding: 2rem;
+    min-height: 250px;
+  }
+
+  #footer-content {
+    gap: 2rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+
+    @media (max-width: 767px) {
+      grid-template-columns: 1fr;
+    }
+
+    > .contact-info,
+    > nav {
+      > h3 {
+        font-family: "Silkscreen", sans-serif;
+        font-weight: 600;
+        font-style: normal;
+        margin-bottom: 1rem;
+      }
+      > ul {
+        list-style: none;
+
+        > li {
+          a {
+            color: var(--text-subtle) !important;
+          }
+          margin-bottom: 01rem;
+        }
+      }
+    }
+  }
+
+  #footer-final-thoughts {
+    h2 {
+      margin-bottom: 1rem;
+    }
+    p {
+      color: var(--text-subtle);
+    }
+  }
+
+  #copyright {
+    margin-top: 3rem;
+    text-align: center;
+    color: var(--text-subtle);
+  }
+</style>

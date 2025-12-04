@@ -1,0 +1,31 @@
+---
+interface Props {
+  id?: string;
+  class?: string;
+  title?: string;
+}
+
+const { id, class: className, title } = Astro.props;
+---
+
+<button
+  id={id}
+  type="button"
+  class:list={["icon-btn", className]}
+  title={title}
+>
+  <slot />
+</button>
+
+<style is:global>
+  .icon-btn {
+    /* height: 40px; */
+    display: grid;
+    place-items: center;
+    background-color: transparent;
+    border: none;
+    color: var(--text);
+    fill: var(--text);
+    cursor: pointer;
+  }
+</style>
