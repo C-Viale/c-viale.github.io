@@ -6,12 +6,12 @@ type Project = {
 };
 
 export const projects: Project[] = [
-  {
-    id: "learn_opengl_br",
-    name: "AprendaOpenGL",
-    description: "A pt-BR translation of the original LearnOpenGL website.",
-    href: "/projects/aprendaopengl",
-  },
+  // {
+  //   id: "learn_opengl_br",
+  //   name: "AprendaOpenGL",
+  //   description: "A pt-BR translation of the original LearnOpenGL website.",
+  //   href: "/projects/aprendaopengl",
+  // },
   {
     id: "athens_portal",
     name: "Athens Portal",

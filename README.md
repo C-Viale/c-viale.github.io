@@ -1,4 +1,4 @@
-# Caio Lima's Portifolio
+# Caio Viale's Portifolio
 
 This is a personal website built as a professional portifolio.
 
