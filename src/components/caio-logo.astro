@@ -2,15 +2,18 @@
 const { id } = Astro.props;
 ---
 
-<div class="caio-logo" id={id}>
+<a class="caio-logo" id={id} href="/">
   <p>Caio</p>
   <p>Viale</p>
-</div>
+</a>
 
 <style is:global>
   .caio-logo {
     text-align: center;
     font-family: "Silkscreen", sans-serif;
     font-weight: 600;
+
+    color: var(--text);
+    cursor: pointer;
   }
 </style>

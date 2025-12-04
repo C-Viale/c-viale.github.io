@@ -51,7 +51,11 @@ const { title = "Caio Viale | Full-Stack Engineer Portifolio" } = Astro.props;
   document.addEventListener("astro:page-load", () => {
     let theme = localStorage.getItem("theme");
     if (!theme) {
-      theme = "light";
+      const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+      if (media.matches) theme = "dark";
+      else theme = "light";
+
       localStorage.setItem("theme", theme);
     }
 

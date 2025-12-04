@@ -1,9 +1,9 @@
 ---
 import Anchor from "#components/anchor.astro";
-import ThemeToggle from "#components/theme-toggle.astro";
-import MenuIcon from "#components/icons/menu-icon.astro";
-import IconButton from "#components/icon-button.astro";
 import CaioLogo from "#components/caio-logo.astro";
+import IconButton from "#components/icon-button.astro";
+import Menu from "#components/icons/menu.astro";
+import ThemeToggle from "#components/theme-toggle.astro";
 ---
 
 <header id="app-header">
@@ -15,7 +15,7 @@ import CaioLogo from "#components/caio-logo.astro";
       <Anchor button label="Contact me" href="#" />
       <ThemeToggle />
       <IconButton id="expand-dropdown">
-        <MenuIcon size={20} />
+        <Menu size={20} />
       </IconButton>
     </div>
   </div>
@@ -49,6 +49,8 @@ import CaioLogo from "#components/caio-logo.astro";
     align-items: center;
     padding-left: 1.5rem;
     padding-right: 2rem;
+
+    pointer-events: all;
   }
 
   #app-header-logo {
@@ -56,9 +58,8 @@ import CaioLogo from "#components/caio-logo.astro";
   }
   #app-header-nav {
     display: flex;
-    pointer-events: all;
     align-items: center;
-    gap: 3rem;
+    gap: 2rem;
     justify-content: end;
     height: var(--header-h);
   }
