@@ -5,15 +5,16 @@ interface Props {
   button?: boolean;
   replace?: boolean;
   class?: string;
+  highlight?: boolean
 }
 
-const { label, button, href, class: className } = Astro.props;
+const { label, button, href, class: className, highlight } = Astro.props;
 
 const externalLink = href.startsWith("http");
 ---
 
 <a
-  class:list={["anchor", { btn: button }, className]}
+  class:list={["anchor", { btn: button, highlight }, className]}
   href={href}
   target={externalLink ? "_blank" : "_self"}
 >
@@ -24,6 +25,10 @@ const externalLink = href.startsWith("http");
   .anchor {
     color: var(--text)
     line-height: normal;
+
+    &.highlight {
+      text-decoration: underline;
+    }
 
     &.btn {
       color: white;
