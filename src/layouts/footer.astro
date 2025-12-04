@@ -12,8 +12,8 @@ import Anchor from "#components/anchor.astro";
       </p>
     </div>
 
-    <div class="contact-info">
-      <h3>contact info</h3>
+    <div id="contact-info">
+      <h3>Contact Info</h3>
       <ul>
         <li>
           <Anchor label="LinkedIn" href="https://linkedin.com/in/caio-vlima" />
@@ -36,7 +36,7 @@ import Anchor from "#components/anchor.astro";
       </ul>
     </div>
 
-    <nav class="footer-nav">
+    <nav id="footer-nav">
       <h3>Quick Access</h3>
       <ul>
         <li><Anchor label="About me" href="/#about-me" /></li>
@@ -63,24 +63,24 @@ import Anchor from "#components/anchor.astro";
     @media (max-width: 767px) {
       grid-template-columns: 1fr;
     }
+  }
 
-    > .contact-info,
-    > nav {
-      > h3 {
-        font-family: "Silkscreen", sans-serif;
-        font-weight: 600;
-        font-style: normal;
-        margin-bottom: 1rem;
-      }
-      > ul {
-        list-style: none;
+  #contact-info,
+  #footer-nav {
+    > h3 {
+      font-family: "Silkscreen", sans-serif;
+      font-weight: 600;
+      font-style: normal;
+      margin-bottom: 1rem;
+    }
+    > ul {
+      list-style: none;
 
-        > li {
-          a {
-            color: var(--text-subtle) !important;
-          }
-          margin-bottom: 01rem;
+      > li {
+        a {
+          color: var(--text-subtle) !important;
         }
+        margin-bottom: 01rem;
       }
     }
   }
@@ -88,6 +88,7 @@ import Anchor from "#components/anchor.astro";
   #footer-final-thoughts {
     h2 {
       margin-bottom: 1rem;
+      font-family: "Silkscreen", sans-serif;
     }
     p {
       color: var(--text-subtle);
