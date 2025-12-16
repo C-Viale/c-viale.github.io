@@ -8,6 +8,7 @@ import homepage from "#assets/athens-portal/homepage.jpeg";
 import logo from "#assets/athens-portal/logo-full.jpeg";
 import reviews from "#assets/athens-portal/reviews.jpeg";
 import Section from "#components/section.astro";
+import Anchor from "#components/anchor.astro";
 ---
 
 <ProjectArticle
@@ -38,9 +39,13 @@ import Section from "#components/section.astro";
     </p>
     <p>
       The idea of creating an app to help us with this problem came from
-      Guilherme Angeloni. He was one of few friends that I made in that class, a
-      good and honest person, but he lacked experience in software development.
-      We agreed that he would work on the research and I would develop the app.
+      <Anchor
+        highlight
+        label="Guilherme Angeloni."
+        href="https://www.linkedin.com/in/guilhermesangeloni/"
+      /> He was one of few friends that I made in that class, a good and honest person,
+      but he lacked experience in software development at the time. We agreed that
+      he would work on the research and I would develop the app.
     </p>
   </Section>
 
@@ -52,13 +57,11 @@ import Section from "#components/section.astro";
       the web. At the time, we were only using one third-party API for this
       search.
     </p>
-
     <p>
       Once a book got succesfully indexed, it was them saved on our database and
       available to be reviewed. Any registered user could create a review about
       the work, giving a commentary and also assign a rating from 1 to 5 stars.
     </p>
-
     <p>
       A person could use this app without being registered, but it could not
       create reviews nor indexing new works.
@@ -90,8 +93,10 @@ import Section from "#components/section.astro";
   </Section>
 
   <Section name="Technical details">
-    <p>The app was built using Dart/Flutter using Clean Architecture.</p>
-    <p>We used a Node.js back-end built using Express</p>
+    <p>
+      The app was built using Dart/Flutter using Clean Architecture, while the
+      backend was build with Node.js and Express
+    </p>
     <!-- <p>For more info refer to this document</p> -->
   </Section>
 </ProjectArticle>
