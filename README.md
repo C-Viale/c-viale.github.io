@@ -1,6 +1,6 @@
-# Caio Viale's Portifolio
+# Caio Viale's Portfolio
 
-This is a personal website built as a professional portifolio.
+This is a personal website built as a professional portfolio.
 
 Built with [Astro](https://astro.build/) and [Bun](https://bun.sh). No other external dependencies.
 

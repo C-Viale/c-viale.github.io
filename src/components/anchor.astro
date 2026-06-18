@@ -17,9 +17,7 @@ const externalLink = href.startsWith("http");
   class:list={["anchor", { btn: button, highlight }, className]}
   href={href}
   target={externalLink ? "_blank" : "_self"}
->
-  {label}
-</a>
+>{label}</a>
 
 <style is:global>
   .anchor {
