@@ -1,6 +1,6 @@
 ---
 import AppLayout from "#layouts/app-layout.astro";
-import { Image } from "astro:assets";
+import { getImage, Image } from "astro:assets";
 
 interface Props {
   title: string;
@@ -10,9 +10,22 @@ interface Props {
 }
 
 const { title, description, image, imageAlt = "" } = Astro.props;
+
+const pageTitle = `${title} - Caio Viale's Portfolio`;
+
+let ogImage: string | undefined;
+if (image) {
+  const optimized = await getImage({
+    src: image,
+    width: 1200,
+    height: 630,
+    format: "jpg",
+  });
+  ogImage = new URL(optimized.src, Astro.site).href;
+}
 ---
 
-<AppLayout title={`${title} - Caio Viale's Portfolio`}>
+<AppLayout title={pageTitle} description={description} image={ogImage}>
   <div id="article-info">
     {image && <Image src={image} alt={imageAlt} height={100} />}
     <h1 id="article-title">{title}</h1>
