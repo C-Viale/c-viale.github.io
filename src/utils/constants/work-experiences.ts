@@ -34,7 +34,7 @@ export const workExperiences: WorkExperience[] = [
     id: 6,
     company: "Like Brands",
     position: "Full-Stack Engineer",
-    period: ["June 2024", "present"],
+    period: ["June 2024", "June 2026"],
     location: "Remote, Brazil",
     mainSkills: ["TypeScript", "React", "C#", "ASP.NET Core", "PostgreSQL"],
     details: [
