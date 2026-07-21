@@ -1,74 +1,199 @@
 ---
-import { workExperiences } from "#constants/work-experiences";
+import { milestones, workExperiences } from "#constants/work-experiences";
 import HomeSection from "./home-section.astro";
+import TimelineMilestone from "#components/timeline-milestone.astro";
 ---
 
 <HomeSection title="Work Experience">
-  <ul id="work-experiences-list">
+  <div class="timeline">
     {
-      workExperiences.map((experience) => (
-        <li class="work-experience">
-          <header>
-            <h3>
-              <strong>{experience.position}</strong>
-              at
-              <strong>{experience.company}</strong>
-              {experience.freelancer && (
-                <span class="freelancer-mark"> - Freelance</span>
-              )}
-            </h3>
-            <span>{experience.period.join(" - ")}</span>
-          </header>
-          <ul class="work-experience-details">
-            {experience.details.map((detail) => (
-              <li>{detail}</li>
-            ))}
-          </ul>
-        </li>
-      ))
+      workExperiences.map((experience, index) => {
+        const milestoneBefore = milestones.find(
+          (milestone) => milestone.beforeId === experience.id,
+        );
+        const milestoneAfter = milestones.find(
+          (milestone) => milestone.afterId === experience.id,
+        );
+
+        const className =
+          index % 2 === 0 ? "timeline-item--left" : "timeline-item--right";
+
+        return (
+          <>
+            {milestoneAfter && (
+              <TimelineMilestone
+                label={milestoneAfter.label}
+                period={milestoneAfter.period}
+              />
+            )}
+            <div class:list={["timeline-item", className]}>
+              <div class="timeline-dot" />
+              <article class="timeline-card">
+                <header class="timeline-card-header">
+                  <h3>
+                    <strong>{experience.position}</strong>
+                    at
+                    <strong>{experience.company}</strong>
+                    {experience.freelancer && (
+                      <span class="freelancer-mark"> - Freelance</span>
+                    )}
+                  </h3>
+                  <span>{experience.period.join(" - ")}</span>
+                </header>
+                <ul class="timeline-card-details">
+                  {experience.details.map((detail) => (
+                    <li>{detail}</li>
+                  ))}
+                </ul>
+              </article>
+            </div>
+            {milestoneBefore && (
+              <TimelineMilestone
+                label={milestoneBefore.label}
+                period={milestoneBefore.period}
+              />
+            )}
+          </>
+        );
+      })
     }
-  </ul>
+  </div>
 </HomeSection>
 
 <style is:global>
-  #work-experiences-list {
-    list-style: none;
+  #work-experience_content {
+    max-width: 1100px;
+  }
+
+  .timeline {
+    position: relative;
     padding: 0 2rem;
   }
 
-  .work-experience {
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    transform: translateX(-50%);
+    background-color: var(--border);
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 1fr 2rem 1fr;
+    align-items: start;
+    padding-bottom: 2rem;
+    position: relative;
+  }
+
+  .timeline-item--left .timeline-card {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: right;
+  }
+
+  .timeline-item--right .timeline-card {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .timeline-dot {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    width: 12px;
+    height: 12px;
+    margin-top: 1.25rem;
+    border-radius: 50%;
+    background-color: var(--bg-dark);
+    border: 2px solid var(--text);
+    z-index: 1;
+  }
+
+  .timeline-card {
     padding: 1rem;
-    border-width: 1px 1px 1px 1px;
-    margin-top: -1px;
     color: var(--text-subtle);
     background-color: var(--bg-dark);
+    border: 1px solid var(--border);
     transition: all var(--transition);
-    border-color: var(--border);
+  }
 
-    > header {
-      display: flex;
-      justify-content: space-between;
-      font-weight: 400 !important;
+  .timeline-card-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-weight: 400 !important;
 
-      h3 {
-        font-weight: normal;
-      }
-
-      strong {
-        font-weight: 600 !important;
-        color: var(--text);
-      }
+    h3 {
+      font-weight: normal;
     }
+
+    strong {
+      font-weight: 600 !important;
+      color: var(--text);
+    }
+  }
+
+  .timeline-item--left .timeline-card-header {
+    flex-direction: row-reverse;
   }
 
   .freelancer-mark {
     font-size: 0.9rem;
   }
-  .work-experience-details {
-    padding: 1rem;
+
+  .timeline-card-details {
+    padding: 1rem 0 0;
     color: var(--text-subtle);
+    list-style-position: inside;
+  }
+
+  .timeline-item--left .timeline-card-details {
+    text-align: right;
+    list-style-position: inside;
   }
 
   @media (max-width: 767px) {
+    .timeline {
+      padding: 0 1.5rem 0 0;
+    }
+
+    .timeline::before {
+      left: 1.45rem;
+      transform: none;
+    }
+
+    .timeline-item {
+      grid-template-columns: 2rem 1fr;
+      padding-left: 0.5rem;
+    }
+
+    .timeline-item--left .timeline-card,
+    .timeline-item--right .timeline-card {
+      grid-column: 2;
+      text-align: left;
+    }
+
+    .timeline-dot {
+      grid-column: 1;
+    }
+
+    .timeline-item--left .timeline-card-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .timeline-item--left .timeline-card-details {
+      text-align: left;
+    }
+
+    .timeline-card-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
   }
 </style>

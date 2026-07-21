@@ -1,0 +1,82 @@
+---
+interface Props {
+  label: string;
+  period?: string;
+}
+
+const { label, period } = Astro.props;
+---
+
+<div class="timeline-milestone">
+  <div class="timeline-milestone-dot"></div>
+  <div class="timeline-milestone-label">
+    <span>{label}</span>
+    {period && <span class="timeline-milestone-period">{period}</span>}
+  </div>
+</div>
+
+<style is:global>
+
+  .timeline-milestone {
+    display: grid;
+    grid-template-columns: 1fr 2rem 1fr;
+    align-items: center;
+    padding-bottom: 2rem;
+    position: relative;
+  }
+
+  .timeline-milestone-dot {
+    grid-column: 2;
+    justify-self: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--text);
+    border: 2px solid var(--bg-dark);
+    z-index: 1;
+  }
+
+  .timeline-milestone-label {
+    grid-column: 1 / 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: -0.75rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border);
+    font-family: "Silkscreen", sans-serif;
+    font-size: 0.85rem;
+    text-align: center;
+    z-index: 1;
+    width: fit-content;
+    justify-self: center;
+  }
+
+  .timeline-milestone-period {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-subtle);
+  }
+
+
+  @media (max-width: 767px) {
+    .timeline-milestone {
+      grid-template-columns: 2rem 1fr;
+      padding-left: 0.5rem;
+    }
+
+    .timeline-milestone-dot {
+      grid-column: 1;
+    }
+
+    .timeline-milestone-label {
+      grid-column: 2;
+      justify-self: start;
+      margin-top: 0;
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+</style>
