@@ -1,16 +1,11 @@
 type Args = {
-  class?: string;
+  className?: string;
   size?: number | string;
   dynamic?: boolean;
   hover?: boolean;
 };
 
-export function parseIconProps({
-  size,
-  dynamic,
-  class: className,
-  hover,
-}: Args) {
+export function parseIconProps({ size, dynamic, className, hover }: Args) {
   let normalizedSize = size;
   if (typeof size === "number") normalizedSize = `${size}px`;
 
@@ -20,7 +15,7 @@ export function parseIconProps({
   if (className) classNames.push(className);
 
   return {
-    size,
+    size: normalizedSize,
     dynamic,
     className: classNames.join(" "),
   };

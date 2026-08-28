@@ -1,0 +1,68 @@
+---
+interface Props {
+  label: string;
+  description?: string;
+  class?: string;
+}
+
+const { label, description, class: className } = Astro.props;
+---
+
+<span class:list={["app-tooltip", className]}>
+  <slot />
+  <span class="app-tooltip__bubble" role="tooltip">
+    <span class="app-tooltip__label">{label}</span>
+    {
+      description && (
+        <span class="app-tooltip__description">{description}</span>
+      )
+    }
+  </span>
+</span>
+
+<style>
+  .app-tooltip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .app-tooltip__bubble {
+    position: absolute;
+    top: calc(100% + 1rem);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.125rem;
+    padding: 0.25rem 0.5rem;
+    white-space: nowrap;
+    text-align: center;
+    color: var(--text);
+    background: var(--bg-lighter);
+    border: 1px solid var(--border);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity var(--transition),
+      visibility var(--transition);
+    z-index: 1000;
+  }
+
+  .app-tooltip:hover .app-tooltip__bubble {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .app-tooltip__label {
+    font-weight: 500;
+  }
+
+  .app-tooltip__description {
+    font-size: 0.85em;
+    color: var(--text-subtle);
+  }
+</style>

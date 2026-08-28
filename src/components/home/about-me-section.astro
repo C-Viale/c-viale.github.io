@@ -3,29 +3,8 @@ import me from "#assets/me.jpeg";
 import { Image } from "astro:assets";
 import HomeSection from "./home-section.astro";
 import Anchor from "#components/anchor.astro";
-
-import BunIcon from "#components/icons/programming/bun.astro";
-import HtmlIcon from "#components/icons/programming/html.astro";
-import CssIcon from "#components/icons/programming/css.astro";
-import JsIcon from "#components/icons/programming/js.astro";
-import TsIcon from "#components/icons/programming/ts.astro";
-import ReactIcon from "#components/icons/programming/react.astro";
-import NodeIcon from "#components/icons/programming/node.astro";
-
-import CIcon from "#components/icons/programming/c.astro";
-import CppIcon from "#components/icons/programming/cpp.astro";
-import CSharpIcon from "#components/icons/programming/csharp.astro";
-import DotnetIcon from "#components/icons/programming/dotnet.astro";
-import FlutterIcon from "#components/icons/programming/flutter.astro";
-import GoIcon from "#components/icons/programming/go.astro";
-import DartIcon from "#components/icons/programming/dart.astro";
-import RustIcon from "#components/icons/programming/rust.astro";
-import PythonIcon from "#components/icons/programming/python.astro";
-
-import NextjsIcon from "#components/icons/programming/nextjs.astro";
-import ViteIcon from "#components/icons/programming/vite.astro";
-import TaurisIcon from "#components/icons/programming/tauri.astro";
-import GodotIcon from "#components/icons/programming/godot.astro";
+import ProgrammingIcon from "#components/icons/programming-icon.astro";
+import { skillIconOrder } from "#constants/stack";
 ---
 
 <HomeSection title="About me" hideTitle transparent>
@@ -50,26 +29,7 @@ import GodotIcon from "#components/icons/programming/godot.astro";
     </div>
   </div>
   <div id="skill-icons">
-    <HtmlIcon hover />
-    <CssIcon hover />
-    <JsIcon hover />
-    <TsIcon hover />
-    <ReactIcon hover />
-    <NodeIcon hover />
-    <BunIcon hover />
-    <CIcon hover />
-    <CppIcon hover />
-    <CSharpIcon hover />
-    <DotnetIcon hover />
-    <RustIcon hover dynamic />
-    <GoIcon hover />
-    <DartIcon hover />
-    <FlutterIcon hover />
-    <PythonIcon hover />
-    <ViteIcon hover />
-    <TaurisIcon hover />
-    <NextjsIcon hover />
-    <GodotIcon hover />
+    {skillIconOrder.map((name) => <ProgrammingIcon name={name} hover />)}
   </div>
 
   <p id="extra-info">
@@ -124,7 +84,7 @@ import GodotIcon from "#components/icons/programming/godot.astro";
     justify-content: center;
     gap: 1rem;
     margin-bottom: 3rem;
-    padding: 0 2rem;
+    padding: 0 2rem 1.75rem;
   }
 
   #extra-info {

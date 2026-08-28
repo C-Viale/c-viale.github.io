@@ -1,0 +1,38 @@
+---
+import { stack, type StackName } from "#constants/stack";
+import Tooltip from "#components/tooltip.astro";
+import { parseIconProps } from "#functions/parse-icon-props";
+
+interface Props {
+  name: StackName;
+  size?: number | string;
+  hover?: boolean;
+  dynamic?: boolean;
+  className?: string;
+}
+
+const icon = stack[Astro.props.name];
+
+const {
+  size = 28,
+  dynamic,
+  className,
+} = parseIconProps({
+  ...Astro.props,
+  dynamic: Astro.props.dynamic ?? icon.dynamic,
+});
+---
+
+<Tooltip
+  label={icon.label}
+  description={icon.experience ? `[${icon.experience}]` : undefined}
+>
+  <svg
+    width={size}
+    height={size}
+    class={className}
+    viewBox="0 0 128 128"
+    style={dynamic ? { fill: "var(--text)" } : undefined}
+    set:html={icon.content}
+  />
+</Tooltip>
