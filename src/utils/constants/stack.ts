@@ -138,26 +138,36 @@ export const stack: Record<StackName, StackData> = {
   },
 };
 
-export const skillIconOrder: StackName[] = [
-  "html",
-  "css",
-  "js",
-  "ts",
-  "react",
-  "node",
-  "bun",
-  "c",
-  "cpp",
-  "csharp",
-  "dotnet",
-  "rust",
-  "go",
-  "dart",
-  "flutter",
-  "python",
-  "vite",
-  "tauri",
-  "nextjs",
-  "astro",
-  "godot",
+export const skillGroups: { title: string; icons: StackName[] }[] = [
+  {
+    title: "Web",
+    icons: [
+      "html",
+      "css",
+      "js",
+      "ts",
+      "react",
+      "node",
+      "vite",
+      "bun",
+      "nextjs",
+      "astro",
+    ],
+  },
+  {
+    title: "Desktop",
+    icons: ["csharp", "dotnet", "tauri"],
+  },
+  {
+    title: "Systems",
+    icons: ["rust", "python", "go", "c", "cpp"],
+  },
+  {
+    title: "Mobile",
+    icons: ["dart", "flutter"],
+  },
+  {
+    title: "Games",
+    icons: ["godot"],
+  },
 ];

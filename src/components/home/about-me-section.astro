@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 import HomeSection from "./home-section.astro";
 import Anchor from "#components/anchor.astro";
 import ProgrammingIcon from "#components/icons/programming-icon.astro";
-import { skillIconOrder } from "#constants/stack";
+import { skillGroups } from "#constants/stack";
 ---
 
 <HomeSection title="About me" hideTitle transparent>
@@ -29,7 +29,18 @@ import { skillIconOrder } from "#constants/stack";
     </div>
   </div>
   <div id="skill-icons">
-    {skillIconOrder.map((name) => <ProgrammingIcon name={name} hover />)}
+    {
+      skillGroups.map((group) => (
+        <div class="skill-group">
+          <h3 class="skill-group__title">{group.title}</h3>
+          <div class="skill-group__icons">
+            {group.icons.map((name) => (
+              <ProgrammingIcon name={name} hover />
+            ))}
+          </div>
+        </div>
+      ))
+    }
   </div>
 
   <p id="extra-info">
@@ -81,10 +92,31 @@ import { skillIconOrder } from "#constants/stack";
 
   #skill-icons {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 3rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
     padding: 0 2rem 1.75rem;
+  }
+
+  .skill-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .skill-group__title {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    color: var(--text-subtle);
+  }
+
+  .skill-group__icons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
   #extra-info {
