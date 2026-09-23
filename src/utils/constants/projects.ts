@@ -18,6 +18,12 @@ export const projects: Project[] = [
     description: "A mobile app built for my bachelor's degree final paper.",
     href: "/projects/athens-portal",
   },
+  {
+    id: "godot_simple_inventory_system",
+    name: "Simple Inventory System in Godot",
+    description: "An infinite inventory system without management mechanics.",
+    href: "https://github.com/C-Viale/godot-simple-inventory-system",
+  },
   // {
   //   id: "conquest",
   //   name: "Conquest",
