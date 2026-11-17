@@ -280,8 +280,8 @@ let alpha_table[alpha_bits] = 0;`.trim();
       <Code lang="rust" code={rle} />
 
       <p>
-        Our buffer can be used in the same way as the uncompressed variant. See the result of{" "}
-        <code>ItemIcons12.jit</code>
+        Our buffer can be used in the same way as the uncompressed variant. See the result of
+        <code>ItemIcons12.jit</code>:
       </p>
       <Picture src={tgaRleResult} alt="An image of item icons on a grid." caption="Textures for items." />
     </Section>
@@ -351,6 +351,8 @@ let alpha_table[alpha_bits] = 0;`.trim();
         Because DXT1 does not support transparency, all pixels will have a alpha of <code>255</code>.
       </p>
       <Picture
+        width={256}
+        height={256}
         src={dxt1Result}
         alt="An image showing a sand texture."
         caption="tile05050.jit - A sandy ground texture."
