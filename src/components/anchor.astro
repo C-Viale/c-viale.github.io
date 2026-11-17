@@ -24,6 +24,10 @@ const externalLink = href.startsWith("http");
     color: var(--text)
     line-height: normal;
 
+    &:not(:has(.btn)):hover {
+      color: var(--text-hover);
+    }
+
     &.highlight {
       text-decoration: underline;
     }

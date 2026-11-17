@@ -1,0 +1,17 @@
+---
+import Anchor from "#components/anchor.astro";
+import { articles } from "#constants/articles";
+import AppLayout from "#layouts/app-layout.astro";
+---
+
+<AppLayout>
+  <div>
+    <ul>
+      {articles.map((article) => (
+        <li>
+          <Anchor href={article.slug} label={article.title} />
+        </li>
+      ))}
+    </ul>
+  </div>
+</AppLayout>

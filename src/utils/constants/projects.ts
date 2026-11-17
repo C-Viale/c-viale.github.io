@@ -6,12 +6,6 @@ type Project = {
 };
 
 export const projects: Project[] = [
-  // {
-  //   id: "learn_opengl_br",
-  //   name: "AprendaOpenGL",
-  //   description: "A pt-BR translation of the original LearnOpenGL website.",
-  //   href: "/projects/aprendaopengl",
-  // },
   {
     id: "athens_portal",
     name: "Athens Portal",
@@ -25,21 +19,9 @@ export const projects: Project[] = [
     href: "https://github.com/C-Viale/godot-simple-inventory-system",
   },
   // {
-  //   id: "conquest",
-  //   name: "Conquest",
-  //   description: "asdsadsd asdsa d asdas asd ",
-  //   href: "/#",
-  // },
-  // {
-  //   id: "rust_lexer",
-  //   name: "Lexer with Rust",
-  //   description: "lsadalsxasnvi. sdam cmai",
-  //   href: "/#",
-  // },
-  // {
-  //   id: "3d_rendering",
-  //   name: "3D Renderer with OpenGL",
-  //   description: "asijcodj c ias odi ",
-  //   href: "/#",
+  //   id: "aika_inspector",
+  //   name: "AIKA Inspector",
+  //   description: "A tool to visualize and convert assets from AIKA Online.",
+  //   href: "https://github.com/C-Viale/aika-inspector",
   // },
 ];

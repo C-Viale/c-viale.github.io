@@ -10,7 +10,7 @@ import ThemeToggle from "#components/theme-toggle.astro";
   <div id="app-header-content">
     <CaioLogo id="app-header-logo" />
     <div id="app-header-nav">
-      <!-- <Anchor label="Articles" href="/#articles" /> -->
+      <Anchor label="Articles" href="/#articles" />
       <Anchor label="Projects" href="/#projects" />
       <Anchor button label="Contact me" href="/#contact-info" />
       <ThemeToggle />
@@ -21,7 +21,7 @@ import ThemeToggle from "#components/theme-toggle.astro";
   </div>
   <div id="app-header-dropdown">
     <ThemeToggle />
-    <!-- <Anchor label="Articles" href="/#articles" /> -->
+    <Anchor label="Articles" href="/#articles" />
     <Anchor label="Projects" href="/#projects" />
   </div>
 </header>
@@ -139,17 +139,15 @@ import ThemeToggle from "#components/theme-toggle.astro";
       header.dataset.scrolled = "";
     });
 
-    document
-      .getElementById("expand-dropdown")!
-      .addEventListener("click", () => {
-        const dropdown = document.getElementById("app-header-dropdown")!;
+    document.getElementById("expand-dropdown")!.addEventListener("click", () => {
+      const dropdown = document.getElementById("app-header-dropdown")!;
 
-        if (!("open" in dropdown.dataset)) {
-          dropdown.dataset.open = "true";
-        } else {
-          delete dropdown.dataset.open;
-        }
-      });
+      if (!("open" in dropdown.dataset)) {
+        dropdown.dataset.open = "true";
+      } else {
+        delete dropdown.dataset.open;
+      }
+    });
   }
 
   document.addEventListener("astro:page-load", init);

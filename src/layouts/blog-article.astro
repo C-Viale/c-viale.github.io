@@ -1,0 +1,123 @@
+---
+import AppLayout from "#layouts/app-layout.astro";
+import { getImage, Image } from "astro:assets";
+import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+dayjs.extend(LocalizedFormat);
+
+interface Props {
+  title: string;
+  description: string;
+  date: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+}
+
+const { title, description, image, date, imageAlt = "" } = Astro.props;
+
+const pageTitle = `${title} - Caio Viale's Portfolio`;
+
+let ogImage: string | undefined;
+if (image) {
+  const optimized = await getImage({
+    src: image,
+    width: 1200,
+    height: 630,
+    format: "jpg",
+  });
+  ogImage = new URL(optimized.src, Astro.site).href;
+}
+---
+
+<AppLayout title={pageTitle} description={description} image={ogImage}>
+  <div id="blog-info">
+    {image && <Image src={image} alt={imageAlt} height={100} />}
+    <h1 id="blog-title">{title}</h1>
+    {description && <p id="blog-description">{description}</p>}
+    <p id="blog-date">{dayjs(date).format("LL")}</p>
+  </div>
+
+  <article class="blog-article">
+    <div id="blog-content">
+      <slot />
+    </div>
+  </article>
+</AppLayout>
+
+<style is:global>
+  #blog-info {
+    padding: 3rem 1rem;
+    text-align: center;
+    flex: 1;
+
+    > p {
+      color: var(--text-subtle);
+    }
+  }
+
+  #blog-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  #blog-description {
+    margin-bottom: 1rem;
+  }
+  #blog-date {
+    font-size: 0.75rem;
+  }
+
+  #blog-content {
+    max-width: 65ch;
+    margin: auto;
+  }
+
+  .blog-article {
+    background-color: var(--bg-dark);
+    padding: 0 2rem;
+
+    p {
+      font-weight: 400;
+      text-align: justify;
+      overflow-wrap: break-word;
+      hyphens: manual;
+      margin-bottom: 1rem;
+    }
+
+    code:not(.astro-code code) {
+      border: 1px solid var(--bg-code);
+      padding: 0 0.3rem;
+      background-color: var(--bg-code);
+    }
+
+    pre.astro-code {
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    img {
+      max-width: 50ch;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    ul,
+    ol {
+      margin-left: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 0 auto 1rem auto;
+
+      td,
+      th {
+        padding: 0 0.5rem;
+        border: 1px dashed var(--border-3);
+      }
+    }
+  }
+</style>

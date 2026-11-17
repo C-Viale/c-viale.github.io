@@ -1,0 +1,51 @@
+---
+import dayjs from "dayjs";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+dayjs.extend(LocalizedFormat);
+
+interface Props {
+  title: string;
+  description?: string;
+  href: string;
+  date: string;
+}
+
+const { title, description, href, date } = Astro.props;
+---
+
+<a class="article-card" href={href}>
+  <div class="article-info">
+    <div>
+      <p class="article-pub-date">{dayjs(date).format("LL")}</p>
+      <h3>{title}</h3>
+      <p class="article-description">{description}</p>
+    </div>
+  </div>
+</a>
+
+<style is:global>
+  .article-info {
+    .article-pub-date {
+      font-size: 14px;
+      color: var(--text-subtle);
+    }
+  }
+
+  .article-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--bg-dark);
+    height: 112px;
+    text-decoration: none;
+    color: var(--text);
+
+    box-shadow:
+      1px 0 0 0 var(--border),
+      0 1px 0 0 var(--border),
+      1px 1px 0 0 var(--border),
+      1px 0 0 0 var(--border) inset,
+      0 1px 0 0 var(--border) inset;
+  }
+</style>

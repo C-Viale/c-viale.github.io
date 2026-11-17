@@ -1,0 +1,65 @@
+---
+import katex from "katex";
+
+interface Props {
+  text: string;
+  inline?: boolean;
+}
+
+const { text, inline } = Astro.props;
+const html = katex.renderToString(text, {
+  throwOnError: true,
+  displayMode: !inline,
+  trust: true,
+  strict: false,
+  // nasty workaround to work with dark theme
+  macros: {
+    "\\redvar": "\\textcolor{redvar}",
+    "\\bluevar": "\\textcolor{bluevar}",
+    "\\greenvar": "\\textcolor{greenvar}",
+    "\\purplevar": "\\textcolor{purplevar}",
+  },
+});
+---
+
+{inline ? <span class="math-inline" set:html={html} /> : <div class="math-block" set:html={html} />}
+
+<style is:global>
+  .math-block {
+    overflow-x: auto;
+    margin: 1rem;
+  }
+
+  .math-block,
+  .math-inline {
+    body.light & {
+      span[style*="color:redvar"] {
+        color: red;
+      }
+      span[style*="color:bluevar"] {
+        color: blue;
+      }
+      span[style*="color:greenvar"] {
+        color: green;
+      }
+      span[style*="color:purplevar"] {
+        color: purple;
+      }
+    }
+
+    body.dark & {
+      span[style*="color:redvar"] {
+        color: #ff3636;
+      }
+      span[style*="color:bluevar"] {
+        color: #4b8aff;
+      }
+      span[style*="color:greenvar"] {
+        color: #51f151;
+      }
+      span[style*="color:purplevar"] {
+        color: rgb(233, 98, 233);
+      }
+    }
+  }
+</style>

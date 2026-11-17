@@ -1,0 +1,28 @@
+---
+import ArticleCard from "#components/article-card.astro";
+import { articles } from "#constants/articles";
+import HomeSection from "./home-section.astro";
+---
+
+<HomeSection title="Articles">
+  {articles.map((article) => (
+    <ArticleCard
+      href={"articles/" + article.slug}
+      title={article.title}
+      description={article.description}
+      date={article.date}
+    />
+  ))}
+</HomeSection>
+
+<style is:global>
+  #articles_content {
+    display: grid;
+    /* grid-template-columns: 1fr 1fr; */
+    padding: 0 2rem;
+
+    @media (max-width: 767px) {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

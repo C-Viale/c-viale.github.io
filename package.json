@@ -10,6 +10,11 @@
   },
   "dependencies": {
     "astro": "5.16.3",
-    "dayjs": "^1.11.23"
+    "dayjs": "^1.11.23",
+    "katex": "^0.19.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.10.1",
+    "prettier-plugin-astro": "^1.1.2"
   }
 }

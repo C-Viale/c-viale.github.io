@@ -1,3 +1,5 @@
+@import "katex/dist/katex.min.css";
+
 :root {
   --transition: 0.3s ease;
   --header-h: 72px;
@@ -7,11 +9,14 @@ body.light {
   --bg-dark: hsl(0, 0%, 96%);
   --bg: hsl(0, 0%, 85%);
   --bg-lighter: hsl(0, 0%, 95%);
+  --bg-code: hsl(0, 0%, 85%);
 
   --border: hsl(0, 0%, 87%);
   --border-2: hsl(0, 0%, 91%);
+  --border-3: hsl(0, 0%, 60%);
 
   --text: hsl(0, 0%, 11%);
+  --text-hover: hsl(0, 0%, 11%);
   --text-subtle: hsl(0, 0%, 32%);
 }
 
@@ -19,11 +24,14 @@ body.dark {
   --bg-dark: hsl(0, 0%, 9%);
   --bg: hsl(0, 0%, 10%);
   --bg-lighter: hsl(0, 0%, 20%);
+  --bg-code: hsl(0, 0%, 20%);
 
   --border: hsl(0, 0%, 21%);
   --border-2: hsl(0, 0%, 12%);
+  --border-3: hsl(0, 0%, 40%);
 
-  --text: white;
+  --text: hsl(0, 0%, 85%);
+  --text-hover: hsl(0, 0%, 100%);
   --text-subtle: hsl(0, 0%, 68%);
 }
 
@@ -39,17 +47,17 @@ body.dark {
 
 html,
 body {
-  font-family: "Space Grotesk", sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+  line-height: 1.5;
   width: 100vw;
   background-color: var(--bg-dark);
   color: var(--text);
 
-  background: linear-gradient(var(--border-2) 1.5px, transparent 1.5px) 0 0 /
-      70px 70px,
-    linear-gradient(90deg, var(--border-2) 1.5px, transparent 1.5px) 0 0 / 70px
-      70px var(--bg-dark);
+  background:
+    linear-gradient(var(--border-2) 1.5px, transparent 1.5px) 0 0 / 70px 70px,
+    linear-gradient(90deg, var(--border-2) 1.5px, transparent 1.5px) 0 0 / 70px 70px var(--bg-dark);
 
   scrollbar-gutter: stable;
 }

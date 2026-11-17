@@ -1,0 +1,31 @@
+---
+import { astroCalledServerError } from "astro:actions";
+
+interface Props {
+  columns: string[];
+  data: unknown[][];
+}
+
+const { columns, data } = Astro.props;
+
+for (const row of data) {
+  if (row.length > columns.length) throw new Error("Data need more columns");
+}
+---
+
+<table>
+  <thead>
+    {columns.map((col) => (
+      <th>{col}</th>
+    ))}
+  </thead>
+  <tbody>
+    {data.map((row) => (
+      <tr>
+        {row.map((cell) => (
+          <td align={typeof cell === "number" ? "center" : undefined}>{cell}</td>
+        ))}
+      </tr>
+    ))}
+  </tbody>
+</table>
