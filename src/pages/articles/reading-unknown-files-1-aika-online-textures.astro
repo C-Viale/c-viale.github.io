@@ -100,62 +100,62 @@ let alpha_table[alpha_bits] = 0;`.trim();
       A friend of mine, Joseph, asked if it was possible to do something very specific.
     </p>
     <p>
-      There is this game named AIKA Online, a korean MMORPG that we played a lot in the 2010's. We met there after he
-      inspected my character's profile and found funny that I had Aldebaran, the Rifleman's mount, equipped in a
+      There is this game named AIKA Online, a Korean MMORPG that we played a lot in the 2010s. We met there after he
+      inspected my character's profile and found it funny that I had Aldebaran, the Rifleman's mount, equipped on a
       Warrior. It was, indeed, comical, as the Warrior class is tall and muscular, and the mount was built for the small
-      and thin Rifleman, creating a sort of an "elephant in a bicycle" situation.
+      and thin Rifleman, creating a sort of an "elephant on a bicycle" situation.
     </p>
     <p>
-      Joseph asked if it was possible to find 3D models for the characters of that game, which I replied that there
-      aren't much info about the game itself. Sure, AIKA had its popularity, but MMORPGs are already niche enough, and
+      Joseph asked if it was possible to find 3D models for the characters of that game, to which I replied that there
+      isn't much info about the game itself. Sure, AIKA had its popularity, but MMORPGs are already niche enough, and
       this game never had enough power to break out of the bubble. To make things a bit more complicated, there are
       tools like Bin Parser or Mesh Viewer, and I needed a more robust tool to visualize and extract the necessary files
       that my friend wanted.
     </p>
     <p>
-      I then created a program that allowed me to successfully extract meshes and textures for a character, using
-      existing codebases as a start point. However, both tools had problems: Mesh Viewer exported boneless meshes only
-      as COLLADA files (with structural problems), and the JIT converter did not work with newer files that have
-      different magic values.
+      I then created a program that successfully extracted meshes and textures for a character. I started by reading the
+      source code of two existing tools, Mesh Viewer and the JIT converter, and used it as a base to write my own
+      version in Rust. However, both tools had problems: Mesh Viewer exported boneless meshes only as COLLADA files
+      (with structural problems), and the JIT converter did not work with newer files that have different magic values.
+      Because of this, I did my own research and experiments instead of reusing their code.
     </p>
     <p>
-      Being frustrated by old tools for a old forgotten game was enough. So I created a new project that would allow me
+      Being frustrated by old tools for an old forgotten game was enough. So I created a new project that would allow me
       to open the game client folder and see each file with a click. Using Tauri, I made a simple interface that allowed
       me to see which files I could open, and what was going wrong with the parser.
     </p>
     <p>
-      Every new file that wasn't able to be opened gave me more curiosity on how the game handles those files. "Why
-      there are many image formats? Why there are file extensions with different letter casings?". What once was a
-      simple project to get a mesh for a character, became a mission to understand what was going on and create the
-      definitive tool.
+      Every new file I could'nt open made me more curious about how the game handles those files. "Why are there so many
+      image formats? Why are there file extensions with different letter casing?". What was once a simple project to get
+      a mesh for a character, became a mission to understand what was going on and create the definitive tool.
     </p>
-    <p>This article is being written to share my findings with this project, starting with the texture files.</p>
+    <p>This article is being written to share my findings from this project, starting with the texture files.</p>
     <p>
-      You may ask "why did you code everything by hand and didn't used lib x or y?", and the only answer I have is:
+      You may ask "why did you code everything by hand and didn't use lib x or y?", and the only answer I have is:
       because that's the fun part!
     </p>
   </Section>
 
   <Section name="Client Files">
     <p>
-      I will be using the cliente from the official Brazilian server, version 1156 - the latest version as of November
-      16, 2016. Upon examining the game client's root folder, we can see that there is no need to decompile or use
-      external tools to access the game's assets. Assets are directly acessible, organized in their own folders.
+      I will be using the client from the official Brazilian server, version 1156 - the latest version as of November
+      16, 2026. Upon examining the game client's root folder, we can see that there is no need to decompile or use
+      external tools to access the game's assets. Assets are directly accessible, organized in their own folders.
     </p>
     <Code lang="text" code={folders} />
     <p>
-      What matter for us now is <code>STextures</code>, <code>Env</code>, <code>Texture</code> and <code>UI</code>. They
+      What matter to us now is <code>STextures</code>, <code>Env</code>, <code>Texture</code> and <code>UI</code>. They
       contain image files with a <code>.jit</code> extension.
     </p>
     <p>
-      We are going to look into audio files in the next chapter. Some files have convoluted structures or lack of any
-      patterns, which make them more difficult to parse. This is specially true with <code>.bin</code>. Being able to
-      open texture files will be a good start for us.
+      We are going to look into audio files in the next chapter. Some files have convoluted structures or lack any
+      patterns, which make them more difficult to parse. This is especially true for <code>.bin</code> files. Being able
+      to open texture files will be a good start for us.
     </p>
     <Section name="Magic" heading={2}>
       <p>
-        The first 4 bytes of each texture file contains a magic string that tell us which format the file is stored.
-        Luckily for us there's no encryption on them, and each magic can be directly mapped to the following formats:
+        The first 4 bytes of each texture file contain a magic string that tells us which format the file is stored in.
+        Luckily for us, there's no encryption on them, and each magic can be directly mapped to the following formats:
       </p>
       <ul>
         <li>JT20 => TGA</li>
@@ -171,14 +171,14 @@ let alpha_table[alpha_bits] = 0;`.trim();
 
   <Section name="TGA">
     <p>
-      TGA is a image format developed by AT&T EPICenter (which later became Truevision) in 1984, being one of the first
-      image formats that combine several capabilities like true color, transparency and lossless compression. Its simple
-      binary structure made it suitable for video production and 3D rendering, contributing to its widespread adoption
-      in game development.
+      TGA is an image format developed by AT&T EPICenter (which later became Truevision) in 1984, being one of the first
+      image formats that combined several capabilities like true color, transparency and lossless compression. Its
+      simple binary structure made it suitable for video production and 3D rendering, contributing to its widespread
+      adoption in game development.
     </p>
     <p>
-      This is one of the easiest texture format that we can read from AIKA's files, as most TGA files in the game are
-      uncompressed. To start, there is a 20-byte header:
+      This is one of the easiest texture formats that we can read from AIKA's files, as most TGA files in the game are
+      uncompressed. To start, there is a 22-byte header:
     </p>
     <Table
       columns={tableCols}
@@ -199,8 +199,8 @@ let alpha_table[alpha_bits] = 0;`.trim();
       ]}
     />
     <p>
-      For our parser, we will ignore most of these values, using only <code>Dat Type</code>, <code>Width</code>,
-      <code>Height</code>,<code>Pixel Depth</code> and <code>Descriptor</code>. For each pixel, we read the following
+      For our parser, we will ignore most of these values, using only <code>Data Type</code>, <code>Width</code>,
+      <code>Height</code>, <code>Pixel Depth</code> and <code>Descriptor</code>. For each pixel, we read the following
       bytes:
     </p>
     <Table
@@ -216,10 +216,10 @@ let alpha_table[alpha_bits] = 0;`.trim();
       The
       <Anchor label="TGA specification" href="http://www.paulbourke.net/dataformats/tga/" highlight />
       has 9 different values for <code>Data Type</code>, but we don't need to parse every variant as all the game files
-      contains a value of <code>2</code>, <code>3</code> or <code>10</code>.
+      contain a value of <code>2</code>, <code>3</code> or <code>10</code>.
     </p>
     <p>
-      The bits in the <code>Descriptor</code> contains more info about how the image should be built:
+      The bits in the <code>Descriptor</code> contain more info about how the image should be built:
     </p>
     <Table
       columns={["Field", "Bits"]}
@@ -232,13 +232,13 @@ let alpha_table[alpha_bits] = 0;`.trim();
     />
 
     <p>
-      Remember that we are reading everything as Little Endian, and the <code>Descriptor</code> is not different. In
+      Remember that we are reading everything as Little Endian, and the <code>Descriptor</code> is no different. For
       example, if the image has only a right-to-left flag, the descriptor will be <code>00010000</code>.
     </p>
     <p>
       Most files can be parsed at this point. However, I found that there are some textures that are missing some bytes
-      at the end which can potentially crash the program. I tested a lot of files and its usually a black or transparent
-      pixel. In those cases, we can consider that the missing pixel channel is <code>0</code> .
+      at the end which can potentially crash the program. I tested a lot of files and it's usually a black or
+      transparent pixel. In those cases, we can consider that the missing pixel channel is <code>0</code>.
     </p>
     <p>
       See the result for a file named <code>disceroa.jit</code>:
@@ -250,25 +250,25 @@ let alpha_table[alpha_bits] = 0;`.trim();
     />
     <p>
       As you can see, we successfully converted our first textures without any issues. Sometimes, like in this case, the
-      image does not fill the entire space, creating black or white bars. This is not a problem with our parser, they
+      image does not fill the entire space, creating black or white bars. This is not a problem with our parser; they
       already exist in the original files.
     </p>
 
     <Section name="Run-Length Encoding" heading={2}>
       <p>
-        There is only one texture file that I found that use Run-Length Encoding (<code>Image Type == 10</code>), and
-        because we are building a complete tool for our usecase, we have to support it. This type of compression stores
-        RGB color information in packets, which can be of one of two types: Run-Length and Raw.
+        There is only one texture file that I found that uses Run-Length Encoding (<code>Data Type == 10</code>), and
+        because we are building a complete tool for our use case, we have to support it. This type of compression stores
+        RGB color information in packets, which can be one of two types: Run-Length and Raw.
       </p>
       <p>
-        A packet has a 1-byte header, the first bit identifies its type (<code>0</code> for Raw, <code>1</code> for
+        A packet has a 1-byte header: the first bit identifies its type (<code>0</code> for Raw, <code>1</code> for
         Run-Length) and the remaining seven bits specify how many pixels are stored within, minus 1. This means that a
-        packet always store at least 1 pixel (when the count is 0) and can go up to 128 pixels (127 + 1).
+        packet always stores at least 1 pixel (when the count is 0) and can go up to 128 pixels (127 + 1).
       </p>
 
       <ul>
         <li>
-          Run-Length: We read a single RGB color and push into our buffer as many times as specified by the count.
+          Run-Length: We read a single RGB color and push it into our buffer as many times as specified by the count.
         </li>
         <li>
           Raw: We read an RGB color for each pixel, repeating this process for the number of pixels specified by the
@@ -276,7 +276,7 @@ let alpha_table[alpha_bits] = 0;`.trim();
         </li>
       </ul>
 
-      <p>The code should be like this:</p>
+      <p>The code looks like this:</p>
       <Code lang="rust" code={rle} />
 
       <p>
@@ -291,8 +291,8 @@ let alpha_table[alpha_bits] = 0;`.trim();
     <p>
       Originally known as S3 Texture Compression (S3TC), it is a compression format created in 1998 by S3 Graphics to be
       used in their GPUs, and later introduced in OpenGL and DirectX. AIKA was developed using DirectX 9, so we were
-      going to find files with this compression sooner or later. There are 8 variations to the S3TC algorithm, the first
-      five having the DXT1 through DXT5 codes assigned by Microsoft, and only three of these are used in the game.
+      going to find files with this compression sooner or later. There are 8 variations of the S3TC algorithm, the first
+      five of which have the DXT1 through DXT5 codes assigned by Microsoft, and only three of them are used in the game.
     </p>
     <p>All DXTC files from the game have the same header structure:</p>
     <Table
@@ -306,9 +306,8 @@ let alpha_table[alpha_bits] = 0;`.trim();
     <p>
       The payload contains pixel data stored in blocks, with their size varying depending on the compression. DXT1 has
       8-byte blocks, whereas DXT3 and DXT5 both support transparency by having 16-byte blocks. Dividing
-      <code>Block Size</code> by
-      <code>Width</code> and <code>Height</code> gives us how many blocks there are on each row and column,
-      respectively.
+      <code>Width</code> and <code>Height</code> by <code>4</code> gives us how many blocks there are on each row and
+      column, respectively.
     </p>
 
     <Section name="JT31 and JT41 - DXT1" heading={2}>
@@ -329,13 +328,13 @@ let alpha_table[alpha_bits] = 0;`.trim();
       <p>
         After parsing both colors, we generate a palette containing 3 to 4 RGBA colors. The quantity of colors in the
         palette depends on a comparison between <code>Color0</code> and <code>Color1</code> as unsigned integers, as
-        following:
+        follows:
       </p>
       <ul>
         <li>
           If <code>Color0 {">"} Color1</code>:
-          <Math text={`Color2 = \\frac{2 * Color1 + Color2}{3}`} />
-          <Math text={`Color3 = \\frac{Color1 + 2 * Color2}{3}`} />
+          <Math text={`Color2 = \\frac{2 * Color0 + Color1}{3}`} />
+          <Math text={`Color3 = \\frac{Color0 + 2 * Color1}{3}`} />
         </li>
         <li>
           If <code>Color0 {"<="} Color1</code>:
@@ -343,12 +342,12 @@ let alpha_table[alpha_bits] = 0;`.trim();
         </li>
       </ul>
       <p>
-        In the last case,<code>Color3</code> is treated as transparent black (<code>RGBA(0, 0, 0, 0)</code>).
+        In the latter case, <code>Color3</code> is treated as transparent black (<code>RGBA(0, 0, 0, 0)</code>).
       </p>
       <p>
-        Then we read the <code>Color Indices</code>. There are sixteen 2-bit number stored in each block, which map
-        directly into indices on the palette, and the resulting pixels will have the colors pointed by these indices.
-        Because DXT1 does not support transparency, all pixels will have a alpha of <code>255</code>.
+        Then we read the <code>Color Indices</code>. There are sixteen 2-bit numbers stored in each block, which map
+        directly to indices in the palette, and the resulting pixels will have the colors pointed to by. Because DXT1
+        does not support transparency, all pixels will have an alpha of <code>255</code>.
       </p>
       <Picture
         width={256}
@@ -362,7 +361,7 @@ let alpha_table[alpha_bits] = 0;`.trim();
 
     <Section name="JT33 - DXT3" heading={2}>
       <p>
-        Although this variant supports transparency, it is a bit more simple than the previous one. Each block has the
+        Although this variant supports transparency, it is a bit more simpler than the previous one. Each block has the
         following structure:
       </p>
       <Table
@@ -375,10 +374,9 @@ let alpha_table[alpha_bits] = 0;`.trim();
         ]}
       />
       <p>
-        We start the same way as the DXT1 by reading <code>Color0</code> and <code>Color1</code> and parsing them as
-        RGBA. This time, we don't need to compare if <code>ColorO > Color1</code>, the palette will always have 4
-        colors, and the calculation the get
-        <code>Color2</code> and <code>Color3</code> is the same.
+        We start the same way as with DXT1 by reading <code>Color0</code> and <code>Color1</code> and parsing them as
+        RGBA. This time, we don't need to compare whether <code>Color0 > Color1</code>, the palette will always have 4
+        colors, and the calculation to get <code>Color2</code> and <code>Color3</code> is the same.
       </p>
       <p>
         What differs now is that we must read the alpha value contained in <code>Alpha Block</code>. For each pixel, we
@@ -390,7 +388,7 @@ let alpha_table[alpha_bits] = 0;`.trim();
       <Picture
         src={dxt3Result}
         alt="An image showing half of a character's face."
-        caption="The texture for one of the possible options of Warrior faces."
+        caption="The texture for one of the possible Warrior face options."
       />
     </Section>
 
@@ -401,19 +399,19 @@ let alpha_table[alpha_bits] = 0;`.trim();
         indices select one of 8 possible alpha values that are interpolated between the endpoints.
       </p>
       <p>
-        Similar to how DXT1 has two modes depending if <code>Color0 > Color1</code>, DXT5 has two modes for transparency
-        depending on how the endpoints (<code>Alpha0</code> and <code>Alpha1</code>) compare:
+        Similar to how DXT1 has two modes depending on whether <code>Color0 > Color1</code>, DXT5 has two modes for
+        transparency depending on how the endpoints (<code>Alpha0</code> and <code>Alpha1</code>) compare:
       </p>
       <ul>
         <li>
-          If <code>Alpha0 {">"} Alpha1</code> the table will have 8 interpolated values;
+          If <code>Alpha0 {">"} Alpha1</code>, the table will have 6 interpolated values;
         </li>
         <li>
-          If <code>Alpha0 {"<="} Alpha1</code> the table will have 6 interpolated values, in addition to two extremes: 0
-          and 255.
+          If <code>Alpha0 {"<="} Alpha1</code>, the table will have 4 interpolated values, in addition to two extremes:
+          0 and 255.
         </li>
       </ul>
-      <p>To find each interpolated value in the alpha table, we calculate it using weighted average:</p>
+      <p>To find each interpolated value in the alpha table, we calculate it using a weighted average:</p>
       <Math text=`\\frac{((N - D) * Alpha0) + (D * Alpha1)}{N}` />
       <p>
         Where <Math inline text="N" /> is the number of steps that lie between <code>Alpha0</code> and
@@ -434,105 +432,105 @@ let alpha_table[alpha_bits] = 0;`.trim();
       <Picture
         src={dxt5Result}
         alt="An image showing the face of a non-human child in different reactions and moods."
-        caption="Textures of all reactions and moods of a child Pran with blue-ish hair."
+        caption="Textures of all reactions and moods of a child Pran with blueish hair."
       />
     </Section>
 
     <p>
-      After successfully parsing all textures formats, I streamlined the app UI. When selecting the client folder, the
+      After successfully parsing all texture formats, I streamlined the app UI. When selecting the client folder, the
       program lists all subfolders and files, and I can open any supported file with just one click. The backend
       converts the image, sends a buffer to the frontend containing metadata such as size and compression, and the
-      frontend immediatly renders it. There's also a button to export the result.
+      frontend immediately renders it. There's also a button to export the result.
     </p>
   </Section>
   <Section name="More findings">
     <p>
-      Something that I noticed when looking through the files is that the developers of the game are, at the same time,
-      both organized and chaotic. They thought about organizing the game's assets with some conventions, but apparently
-      they are not so good in following.
+      Something that I noticed when looking through the files is that the developers of the game are both organized and
+      chaotic at the same time. They thought about organizing the game's assets with some conventions, but apparently
+      they are not so good in following them.
     </p>
     <p>
-      Most textures are grouped in a convetions that relate to their use in the game. In example, all textures used by
-      the player characters have a prefix <code>CH</code> (player meshes use the same pattern) followed by numbers that
-      represent what character it is, what is that piece (face, chest, legs, etc.) and what armor set is that. Weapons,
-      follow a similar convetion, the prefix representing the class, weapon type and armor set.
+      Most textures are grouped by conventions that relate to their use in the game. For example, all textures used by
+      the player characters have the prefix <code>CH</code> (player meshes use the same pattern) followed by numbers
+      that represent which character it is, which piece it is (face, chest, legs, etc.) and which armor set it belongs
+      to. Weapons follow a similar convention, the prefix representing the class, weapon type and armor set.
     </p>
     <p>
-      Not every file follows the same naming convention though. Some files use CamelCase, others snake_case, and even
-      kebab-case is being used. In some cases, even files of the same family are outliers. For instance, all map
-      textures used in the UI has a <code>Map[xx].jit</code> where <code>[xx]</code> are numbers from 01 through 64. The
-      first five textures have a uppercase "M", then <code>map06.jit</code> starts with a lowercase one. The rest of
+      Not every file follows the same naming convention, though. Some files use CamelCase, others snake_case, and even
+      kebab-case is used. In some cases, even files of the same family are outliers. For instance, all map textures used
+      in the UI follow the pattern <code>Map[xx].jit</code> where <code>[xx]</code> is a number from 01 through 64. The
+      first five textures have an uppercase "M", but <code>map06.jit</code> starts with a lowercase one. The rest of
       these files also use a lowercase "m", the only exception being <code>Map60.jit</code>.
     </p>
     <Section name="Guild Mark limits" heading={2}>
       <p>
-        This is probably the most odd choice I've saw in this research. AIKA has a guild system with a somewhat low
-        limit. Me and my friends had a lot of trouble to create one, as the server was always full. I found files that
-        contains all guild icons, going from <code>GuildMarkWorld0.jit</code> through <code> GuildMarkWorld5.jit</code>.
+        This is probably the oddest choice I've seen in this research. AIKA has a guild system with a somewhat low
+        limit. My friends and I had a lot of trouble creating one, as the server was always full. I found files that
+        contain all guild icons, going from <code>GuildMarkWorld0.jit</code> through <code> GuildMarkWorld5.jit</code>.
       </p>
       <p>
-        Each file was supposed to contain guild icons for a different subserver, but the brazilian server never had more
+        Each file was supposed to contain guild icons for a different subserver, but the Brazilian server never had more
         than two active subservers at the same time.
       </p>
       <p>
-        One of these is named <code>GuildMarkWorld1.tga</code>, which is somewhat peculiar, as is the only one to be
+        One of these is named <code>GuildMarkWorld1.tga</code>, which is somewhat peculiar, as it is the only one to be
         stored as a plain TGA file. As far as I can tell, the game only uses this particular file, while the remaining
         ones have seemingly remained untouched for over a decade. Those leftovers should have been removed, especially
         considering that one of them contains some rather questionable examples of 20th-century German graphic design.
       </p>
       <Picture src={guildMarkIcons} alt="" caption="GuildMarkWorld1.tga - Guild icons as of November 17, 2026." />
       <p>
-        It appears that the guild mark is hard-limited by how many icons can be stored on this file. All guilds from all
-        nations are stored in this file, which can theoretically store up to 676 different icons. The server, however,
-        has a 127 limit per nation, which results in 127 x 5 = 635 guilds slots in the entire game.
+        It appears that the guild mark is hard-limited by how many icons can be stored in this file. All guilds from all
+        nations are stored in it, which can theoretically store up to 676 different icons. The server, however, has a
+        limit of 127 per nation, which results in 127 x 5 = 635 guild slots in the entire game.
       </p>
       <p>
-        This means that, even if the server doesn't have a limit, the client will not be able to handle a great amount
-        of guilds. It would have been required the guild mark system to be rewrited, allowing each guild to have their
-        own unique texture file stored on the server, and not in the client.
+        This means that, even if the server doesn't have a limit, the client will not be able to handle a large number
+        of guilds. The guild mark system would have had to be rewritten, allowing each guild to have its own unique
+        texture file stored on the server rather than in the client.
       </p>
     </Section>
     <Section name="Debug/Beta files" heading={2}>
       <p>
         Probably the funniest part of looking into a game's assets is finding things that the player should not see. I
-        never thought I would find assets like this, as the game is running for more than a decade and they should have
-        been removed.
+        never thought I would find assets like this, as the game has been running for more than a decade and they should
+        have been removed.
       </p>
-      <p>To start, I found files that are completly empty:</p>
+      <p>To start, I found files that are completely empty:</p>
       <ul>
         <li>
-          <code>z011410.jit</code> and <code>z011411.jit</code> are both a 4x4 black square;
+          <code>z011410.jit</code> and <code>z011411.jit</code> are both a 4×4 black square;
         </li>
         <li>
-          <code>z011413.jit</code> and <code>z011414.jit</code> are both a 4x4 gray square;
+          <code>z011413.jit</code> and <code>z011414.jit</code> are both a 4×4 gray square;
         </li>
         <li>
-          <code>sz010812.jit</code> and <code>sz010813.jit</code> are both a 4x4 white square;
+          <code>sz010812.jit</code> and <code>sz010813.jit</code> are both a 4×4 white square;
         </li>
         <li>
-          <code>black256.jit</code> is a 256x256 black square;
+          <code>black256.jit</code> is a 256×256 black square;
         </li>
         <li>
-          <code>blank.jit</code> is a 128x128 black square;
+          <code>blank.jit</code> is a 128×128 black square;
         </li>
         <li>
-          <code>Blank.jit</code> (with uppercase M) is a 256x256 image that is completly transparent.
+          <code>Blank.jit</code> (with uppercase M) is a 256×256 image that is completly transparent.
         </li>
       </ul>
-      <p>And the most interesting file found is:</p>
+      <p>And the most interesting file I found is:</p>
       <Picture alt="Pran01.jit" src={pranDebug} caption="Pran01.jit - A beta texture for the Pran states." />
     </Section>
   </Section>
 
   <Section name="Final thoughts" heading={2}>
     <p>
-      This has been a great but challenging experience. I've had a lot of fun analyzingf files from a game I loved in my
-      chilhood.
+      This has been a great but challenging experience. I've had a lot of fun analyzing files from a game I loved in my
+      childhood.
     </p>
     <p>
-      I'm not done yet, there's still a lot of ground to cover. In the next chapter, we are going to see audio files.
+      I'm not done yet; there's still a lot of ground to cover. In the next chapter, we are going to see audio files.
     </p>
-    <p>The tool will be launched soon once there are enough features and they are working properly.</p>
+    <p>The tool will be released soon, once it has enough features and they are working properly.</p>
     <p>Thank you for reading!</p>
   </Section>
 </BlogArticle>
