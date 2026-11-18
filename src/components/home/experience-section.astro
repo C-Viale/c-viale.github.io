@@ -6,80 +6,48 @@ import TimelineMilestone from "#components/timeline-milestone.astro";
 
 <HomeSection title="Work Experience">
   <div class="timeline">
-    {
-      workExperiences.map((experience, index) => {
-        const milestoneBefore = milestones.find(
-          (milestone) => milestone.beforeId === experience.id,
-        );
-        const milestoneAfter = milestones.find(
-          (milestone) => milestone.afterId === experience.id,
-        );
+    {workExperiences.map((experience, index) => {
+      const milestoneBefore = milestones.find((milestone) => milestone.beforeId === experience.id);
+      const milestoneAfter = milestones.find((milestone) => milestone.afterId === experience.id);
 
-        const className =
-          index % 2 === 0 ? "timeline-item--left" : "timeline-item--right";
-        const detailsId = `experience-details-${experience.id}`;
+      const className = index % 2 === 0 ? "timeline-item--left" : "timeline-item--right";
+      const detailsId = `experience-details-${experience.id}`;
 
-        return (
-          <>
-            {milestoneAfter && (
-              <TimelineMilestone
-                label={milestoneAfter.label}
-                period={milestoneAfter.period}
-              />
-            )}
-            <div class:list={["timeline-item", className]}>
-              <div class="timeline-dot" />
-              <article class="timeline-card">
-                <header class="timeline-card-header">
-                  <h3 class="timeline-card-role">{experience.position}</h3>
-                  <p class="timeline-card-company">{experience.company}</p>
-                  <p class="timeline-card-period">
-                    {experience.period.join(" – ")}
-                  </p>
-                  <p class="timeline-card-location">{experience.location}</p>
-                  {experience.freelancer && (
-                    <p class="freelancer-mark">Freelance</p>
-                  )}
-                </header>
-                <div class="timeline-card-details-wrap">
-                  <div
-                    id={detailsId}
-                    class="timeline-card-expandable"
-                    aria-hidden="true"
-                  >
-                    <ul class="timeline-card-details">
-                      {experience.details.map((detail) => (
-                        <li>{detail}</li>
-                      ))}
-                    </ul>
-                    <div class="timeline-card-skills">
-                      <h4 class="timeline-card-skills-title">Main Skills</h4>
-                      <p class="timeline-card-skills-list">
-                        {experience.mainSkills.join(", ")}
-                      </p>
-                    </div>
+      return (
+        <>
+          {milestoneAfter && <TimelineMilestone label={milestoneAfter.label} period={milestoneAfter.period} />}
+          <div class:list={["timeline-item", className]}>
+            <div class="timeline-dot" />
+            <article class="timeline-card">
+              <header class="timeline-card-header">
+                <h2 class="timeline-card-company">{experience.company}</h2>
+                <h3 class="timeline-card-role">{experience.position}</h3>
+                <p class="timeline-card-period">{experience.period.join(" – ")}</p>
+                <p class="timeline-card-location">{experience.location}</p>
+                {experience.freelancer && <p class="freelancer-mark">Freelance</p>}
+              </header>
+              <div class="timeline-card-details-wrap">
+                <div id={detailsId} class="timeline-card-expandable" aria-hidden="true">
+                  <ul class="timeline-card-details">
+                    {experience.details.map((detail) => (
+                      <li>{detail}</li>
+                    ))}
+                  </ul>
+                  <div class="timeline-card-skills">
+                    <h4 class="timeline-card-skills-title">Main Skills</h4>
+                    <p class="timeline-card-skills-list">{experience.mainSkills.join(", ")}</p>
                   </div>
                 </div>
-                <button
-                  type="button"
-                  class="timeline-card-toggle"
-                  aria-expanded="false"
-                  aria-controls={detailsId}
-                >
-                  See more
-                </button>
-              </article>
-            </div>
-            {milestoneBefore && (
-              <TimelineMilestone
-                label={milestoneBefore.label}
-                period={milestoneBefore.period}
-              />
-            )}
-          </>
-        );
-      })
-    }
+              </div>
+              <button type="button" class="timeline-card-toggle" aria-expanded="false" aria-controls={detailsId}>
+                See more
+              </button>
+            </article>
+          </div>
+          {milestoneBefore && <TimelineMilestone label={milestoneBefore.label} period={milestoneBefore.period} />}
+        </>
+      );
+    })}
   </div>
 </HomeSection>
 
