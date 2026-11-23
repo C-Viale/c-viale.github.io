@@ -38,7 +38,7 @@ const folders = `
 `.trim();
 
 const rle = `
-while pixel_buffer.len() < (width_us * height_us) {
+while pixel_data.len() < (width_us * height_us) {
   let packet_header = reader.read_u8()?;
   let rl_packet = (packet_header & RLE_PACKET_TYPE_BIT) != 0;
   let packet_pixel_count = (packet_header & RLE_PACKET_COUNT_BITS) as usize + 1;
@@ -46,11 +46,11 @@ while pixel_buffer.len() < (width_us * height_us) {
   if rl_packet {
     let color = read_bgra(&mut reader, pixel_depth)?;
     for _ in 0..packet_pixel_count {
-      pixel_buffer.push(color);
+      pixel_data.push(color);
     }
   } else {
     for _ in 0..packet_pixel_count {
-      pixel_buffer.push(read_bgra(&mut reader, pixel_depth)?);
+      pixel_data.push(read_bgra(&mut reader, pixel_depth)?);
     }
   }
 }
@@ -166,6 +166,10 @@ let alpha_table[alpha_bits] = 0;`.trim();
       <p>
         I haven't found any info about why there are two magic strings that represent <code>DXT1</code>.
       </p>
+      <p>
+        Since the only info we have about the exact file format is the magic, we need to build a custom parser that
+        supports each variant. The parser will read all pixel data and store them in a <code>{"Vec<RGBA>"}</code>.
+      </p>
     </Section>
   </Section>
 
@@ -200,8 +204,9 @@ let alpha_table[alpha_bits] = 0;`.trim();
     />
     <p>
       For our parser, we will ignore most of these values, using only <code>Data Type</code>, <code>Width</code>,
-      <code>Height</code>, <code>Pixel Depth</code> and <code>Descriptor</code>. For each pixel, we read the following
-      bytes:
+      <code>Height</code>, <code>Pixel Depth</code> and <code>Descriptor</code>. Using the image's size, we instantiate
+      the <code>pixel_data</code> vector using <code>Vec::with_capacity(Width * Height)</code>. Then, for each pixel, we
+      read the following bytes:
     </p>
     <Table
       columns={tableCols}
@@ -219,26 +224,31 @@ let alpha_table[alpha_bits] = 0;`.trim();
       contain a value of <code>2</code>, <code>3</code> or <code>10</code>.
     </p>
     <p>
-      The bits in the <code>Descriptor</code> contain more info about how the image should be built:
+      The bits in the <code>Descriptor</code> contain more info about how to render the image:
     </p>
     <Table
       columns={["Field", "Bits"]}
       data={[
-        ["Alpha bits per pixel", "1-4"],
-        ["Right to left", "5"],
-        ["Top to bottom", "6"],
-        ["Unused", "7-8"],
+        ["Alpha bits per pixel", "3-0"],
+        ["Right to left", "4"],
+        ["Top to bottom", "5"],
+        ["Unused", "7-6"],
       ]}
     />
-
     <p>
       Remember that we are reading everything as Little Endian, and the <code>Descriptor</code> is no different. For
-      example, if the image has only a right-to-left flag, the descriptor will be <code>00010000</code>.
+      example, if the image has only a top-to-bottom flag, the descriptor will be <code>00100000</code>.
     </p>
     <p>
-      Most files can be parsed at this point. However, I found that there are some textures that are missing some bytes
-      at the end which can potentially crash the program. I tested a lot of files and it's usually a black or
-      transparent pixel. In those cases, we can consider that the missing pixel channel is <code>0</code>.
+      Also note that Paul Bourke's specification states that bit 4 is reserved, whereas the official Truevision
+      specification (archived
+      <Anchor label="in this repository" href="https://github.com/DEAKSoftware/Truevision-TGA" highlight /> by Dominik
+      Deák) states that it is a right-to-left flag.
+    </p>
+    <p>
+      Most files with this format can be parsed at this point. However, I found that there are some textures that are
+      missing some bytes at the end which can potentially crash the program. I tested a lot of files and it's usually a
+      black or transparent pixel. In those cases, we can consider that the missing pixel channel is <code>0</code>.
     </p>
     <p>
       See the result for a file named <code>disceroa.jit</code>:
@@ -268,7 +278,7 @@ let alpha_table[alpha_bits] = 0;`.trim();
 
       <ul>
         <li>
-          Run-Length: We read a single RGB color and push it into our buffer as many times as specified by the count.
+          Run-Length: We read a single RGB color and push it into our vector as many times as specified by the count.
         </li>
         <li>
           Raw: We read an RGB color for each pixel, repeating this process for the number of pixels specified by the
@@ -280,7 +290,7 @@ let alpha_table[alpha_bits] = 0;`.trim();
       <Code lang="rust" code={rle} />
 
       <p>
-        Our buffer can be used in the same way as the uncompressed variant. See the result of
+        Our vector can be used in the same way as the uncompressed variant. See the result of
         <code>ItemIcons12.jit</code>:
       </p>
       <Picture src={tgaRleResult} alt="An image of item icons on a grid." caption="Textures for items." />
@@ -441,6 +451,7 @@ let alpha_table[alpha_bits] = 0;`.trim();
       frontend immediately renders it. There's also a button to export the result.
     </p>
   </Section>
+
   <Section name="More findings">
     <p>
       Something that I noticed when looking through the files is that the developers of the game are both organized and
