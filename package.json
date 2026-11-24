@@ -9,7 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "5.16.3",
+    "astro": "7.4.13",
     "dayjs": "^1.11.23",
     "katex": "^0.19.1"
   },

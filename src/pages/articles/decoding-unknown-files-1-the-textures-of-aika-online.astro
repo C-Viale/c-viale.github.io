@@ -16,7 +16,7 @@ import pranDebug from "#assets/articles/pran-debug.png";
 import tgaResult from "#assets/articles/tga-result.png";
 import tgaRleResult from "#assets/articles/tga-rle-result.png";
 
-const articleInfo = articles.find((article) => article.id === "aika-files-1")!;
+const articleInfo = articles.find((article) => article.id === "duf-aika-1")!;
 
 const tableCols = ["Field Name", "Type", "Size in bits"];
 
@@ -33,6 +33,7 @@ const folders = `
 ├── Mesh 
 ├── Objects 
 ├── Shader
+├── Sound
 ├── Texture 
 └── UI
 `.trim();
@@ -203,10 +204,10 @@ let alpha_table[alpha_bits] = 0;`.trim();
       ]}
     />
     <p>
-      For our parser, we will ignore most of these values, using only <code>Data Type</code>, <code>Width</code>,
-      <code>Height</code>, <code>Pixel Depth</code> and <code>Descriptor</code>. Using the image's size, we instantiate
-      the <code>pixel_data</code> vector using <code>Vec::with_capacity(Width * Height)</code>. Then, for each pixel, we
-      read the following bytes:
+      For our parser, we will ignore most of these values and use only <code>Data Type</code>, <code>Width</code>,{" "}
+      <code>Height</code>, <code>Pixel Depth</code> and <code>Descriptor</code>. Using the image's dimensions, we
+      preallocate the <code>pixel_data</code> vector with <code>Vec::with_capacity(Width * Height)</code>. Then, for
+      each pixel, we read the following bytes:
     </p>
     <Table
       columns={tableCols}
@@ -218,9 +219,8 @@ let alpha_table[alpha_bits] = 0;`.trim();
       ]}
     />
     <p>
-      The
-      <Anchor label="TGA specification" href="http://www.paulbourke.net/dataformats/tga/" highlight />
-      has 9 different values for <code>Data Type</code>, but we don't need to parse every variant as all the game files
+      The <Anchor label="TGA specification" href="http://www.paulbourke.net/dataformats/tga/" highlight /> has 9
+      different values for <code>Data Type</code>, but we don't need to parse every variant as all the game files
       contain a value of <code>2</code>, <code>3</code> or <code>10</code>.
     </p>
     <p>
@@ -241,7 +241,7 @@ let alpha_table[alpha_bits] = 0;`.trim();
     </p>
     <p>
       Also note that Paul Bourke's specification states that bit 4 is reserved, whereas the official Truevision
-      specification (archived
+      specification (archived{" "}
       <Anchor label="in this repository" href="https://github.com/DEAKSoftware/Truevision-TGA" highlight /> by Dominik
       Deák) states that it is a right-to-left flag.
     </p>
@@ -275,7 +275,6 @@ let alpha_table[alpha_bits] = 0;`.trim();
         Run-Length) and the remaining seven bits specify how many pixels are stored within, minus 1. This means that a
         packet always stores at least 1 pixel (when the count is 0) and can go up to 128 pixels (127 + 1).
       </p>
-
       <ul>
         <li>
           Run-Length: We read a single RGB color and push it into our vector as many times as specified by the count.
@@ -285,10 +284,8 @@ let alpha_table[alpha_bits] = 0;`.trim();
           count.
         </li>
       </ul>
-
       <p>The code looks like this:</p>
       <Code lang="rust" code={rle} />
-
       <p>
         Our vector can be used in the same way as the uncompressed variant. See the result of
         <code>ItemIcons12.jit</code>:
@@ -315,7 +312,7 @@ let alpha_table[alpha_bits] = 0;`.trim();
     />
     <p>
       The payload contains pixel data stored in blocks, with their size varying depending on the compression. DXT1 has
-      8-byte blocks, whereas DXT3 and DXT5 both support transparency by having 16-byte blocks. Dividing
+      8-byte blocks, whereas DXT3 and DXT5 both support transparency by having 16-byte blocks. Dividing{" "}
       <code>Width</code> and <code>Height</code> by <code>4</code> gives us how many blocks there are on each row and
       column, respectively.
     </p>
